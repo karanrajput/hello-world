@@ -1,0 +1,9 @@
+{
+    "discord.enabled": true,
+    "bracketPairColorizer.activeScopeCSS": [
+        "borderStyle : solid",
+        "borderWidth : 1px",
+        "borderColor : {color}; opacity: 0.5"
+    ],
+    "discord.token": "NTA5MDYzOTYwNTQ5NTIzNDU3.YCoUxQ.DWSQnT1E9gWmpjvpJPORrgZ1Cjk"
+}
