@@ -42,6 +42,7 @@ dependencies:
   uuid: ^3.0.4
   mime: ^1.0.0
   open_file: ^3.2.0
+  camera: ^0.8.1
   #harsh
   responsive_framework: ^0.1.0
   cloud_firestore: ^1.0.5
@@ -90,8 +91,12 @@ flutter:
     - family: sf
       fonts:
         - asset: fonts/sf-regular.ttf
+    - family: sfmed
+      fonts:
         - asset: fonts/sf-medium.ttf
           weight: 500
+    - family: sfbold
+      fonts:
         - asset: fonts/sf-bold.ttf
           weight: 700
   #   - family: Trajan Pro

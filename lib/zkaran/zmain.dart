@@ -1,3 +1,4 @@
+import 'package:bkdschool/zkaran/registration.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/material.dart';
@@ -112,7 +113,16 @@ class Hschool extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(child: Rbutton()),
+                child: Container(
+                    child: RButton(
+                        text: "Register Screen",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Registerscreen()),
+                          );
+                        })),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

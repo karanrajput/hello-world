@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:bkdschool/zkaran/registration.dart';
 
 //Menubutton
 
@@ -114,53 +115,107 @@ class Thinbutton extends StatelessWidget {
 
 //simple button
 
-class Rbutton extends StatelessWidget {
-  const Rbutton({Key key}) : super(key: key);
+class RButton extends StatelessWidget {
+  final String text;
+  final double borderRadius;
+  final Color color;
+  final Color textColor;
+  final double fontSize;
+  final VoidCallback onPressed;
+  final bool enabled;
+  final Widget icon;
+  final EdgeInsets padding;
+  final double elevation;
+
+  const RButton(
+      {this.text = "Button",
+      this.onPressed,
+      this.borderRadius = 50,
+      this.fontSize = 20,
+      this.color = Colors.blue,
+      this.enabled = true,
+      this.icon,
+      this.textColor = Colors.white,
+      this.padding = const EdgeInsets.all(10.0),
+      this.elevation = 2});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: TextButton(
+    return ElevatedButton(
+      onPressed: onPressed,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
-        child: Text(
-          'Submit',
-          style: TextStyle(fontSize: 20),
+        padding: padding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            icon != null ? icon : Container(),
+            SizedBox(
+              width: icon != null ? 10 : 0,
+            ),
+            Text(text, style: TextStyle(fontSize: fontSize, color: textColor))
+          ],
         ),
       ),
-      style: TextButton.styleFrom(
-        primary: Colors.white,
-        backgroundColor: Color.fromARGB(255, 126, 116, 249),
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(100))),
-      ),
-      onPressed: () {
-        print('Pressed');
-      },
-    ));
+      style: ButtonStyle(
+          elevation: MaterialStateProperty.all(elevation),
+          backgroundColor: MaterialStateProperty.all(color),
+          shape: MaterialStateProperty.all(RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(borderRadius)))),
+    );
   }
 }
 
 //floating input field
 
 class Rtextfield extends StatelessWidget {
-  const Rtextfield({Key key}) : super(key: key);
+  final String text;
+  final String labeltext;
+  final String hinttext;
+  final Color color;
+  final Color boxcolor;
+  final Color textColor;
+  final double fontSize;
+  final double height;
+  final TextInputType inputType;
+  final VoidCallback onPressed;
+  final bool enabled;
+  final Widget icon;
+  final EdgeInsets padding;
+  final double elevation;
+
+  const Rtextfield(
+      {this.text = "Button",
+      this.labeltext = "Name",
+      this.hinttext = "hint text",
+      this.onPressed,
+      this.fontSize = 20,
+      this.height = 80,
+      this.color = Colors.blue,
+      this.boxcolor = Colors.blueAccent,
+      this.inputType = TextInputType.text,
+      this.enabled = true,
+      this.icon,
+      this.textColor = Colors.white,
+      this.padding = const EdgeInsets.all(10.0),
+      this.elevation = 2});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: Color.fromARGB(255, 220, 218, 254),
+            color: boxcolor,
             borderRadius: BorderRadius.all(Radius.circular(20))),
-        height: 80,
+        height: height,
+        width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 10, 5),
           child: TextField(
-              style: GoogleFonts.workSans(fontSize: 20, color: Colors.black),
+              keyboardType: inputType,
+              style: GoogleFonts.workSans(fontSize: fontSize, color: textColor),
               decoration: InputDecoration(
                   labelStyle: TextStyle(color: Colors.black87),
-                  labelText: "Name",
-                  hintText: "Enter Your Name")),
+                  labelText: labeltext,
+                  hintText: hinttext)),
         ));
   }
 }
