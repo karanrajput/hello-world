@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:bkdschool/screens/EntryScreen/EntryScreen.dart';
 
 import 'data/services/services.dart';
+import 'screens/EntryScreen/EntryScreen.dart';
 import 'zkaran/zmain.dart';
 
 void main() async {
@@ -23,7 +24,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "School Management System",
+      title: "BKD School",
       debugShowCheckedModeBanner: false,
       navigatorKey: Globals.navigation,
       theme: ThemeData(
@@ -31,7 +32,7 @@ class MainApp extends StatelessWidget {
         brightness: Brightness.light,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Hschool(),
+      home: EntryScreen(),
     );
   }
 }

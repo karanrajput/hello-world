@@ -1,5 +1,5 @@
+import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:bkdschool/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -9,8 +9,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return RScaffold(
-      body: Container(
+    return RSimpleScaffold(
+      title: "Dashboard",
+      child: Container(
         alignment: Alignment.center,
         child: Text("Hello"),
       ),

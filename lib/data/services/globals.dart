@@ -17,8 +17,8 @@ class Globals {
   //
   //Colors
   //
-  static Color colorMain = Colors.teal;
-  static Color colorSecondary = Colors.pink;
+  static const Color colorMain = Colors.teal;
+  static const Color colorSecondary = Colors.pink;
 
   ///////////////////
 
