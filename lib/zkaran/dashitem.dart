@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class toatalitem extends StatelessWidget {
-  const toatalitem({Key key}) : super(key: key);
+class Toatalitem extends StatelessWidget {
+  const Toatalitem({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

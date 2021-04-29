@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:flat_segmented_control/flat_segmented_control.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Tabview extends StatefulWidget {

@@ -2,10 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/material.dart';
-import 'package:bkdschool/screens/EntryScreen/EntryScreen.dart';
 
 import 'data/services/services.dart';
-import 'screens/EntryScreen/EntryScreen.dart';
 import 'zkaran/zmain.dart';
 
 void main() async {
@@ -32,7 +30,7 @@ class MainApp extends StatelessWidget {
         brightness: Brightness.light,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: EntryScreen(),
+      home: Hschool(),
     );
   }
 }

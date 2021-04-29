@@ -59,8 +59,9 @@ class _AllcategorydataState extends State<Allcategorydata> {
               leftHandSideColBackgroundColor: Color(0xFFFFFFFF),
               rightHandSideColBackgroundColor: Color(0xFFFFFFFF),
               verticalScrollbarStyle: const ScrollbarStyle(
+                thumbColor: Colors.black,
                 isAlwaysShown: true,
-                thickness: 4.0,
+                thickness: 10.0,
                 radius: Radius.circular(5.0),
               ),
               horizontalScrollbarStyle: const ScrollbarStyle(
@@ -68,7 +69,7 @@ class _AllcategorydataState extends State<Allcategorydata> {
                 thickness: 4.0,
                 radius: Radius.circular(5.0),
               ),
-              enablePullToRefresh: true,
+              enablePullToRefresh: false,
               refreshIndicator: const WaterDropHeader(),
               refreshIndicatorHeight: 60,
               onRefresh: () async {
@@ -78,7 +79,7 @@ class _AllcategorydataState extends State<Allcategorydata> {
               },
               htdRefreshController: _hdtRefreshController,
             ),
-            height: MediaQuery.of(context).size.height,
+            height: 500,
           ),
         ],
       ),

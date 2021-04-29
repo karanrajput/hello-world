@@ -1,56 +1,60 @@
 import 'dart:ui';
 
+import 'package:bkdschool/zkaran/Screens/listofclasses.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:bkdschool/zkaran/registration.dart';
 
 //Menubutton
 
 class Menubutton extends StatelessWidget {
-  const Menubutton({Key key}) : super(key: key);
+  final String text;
+  final IconData icon;
+  final double iconsize;
+  final VoidCallback onpressed;
+  final double height;
+
+  const Menubutton({
+    this.icon = FontAwesomeIcons.dashcube,
+    this.text = "Dashboard",
+    this.iconsize = 20,
+    this.onpressed,
+    this.height = 55,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Color.fromARGB(255, 220, 218, 254),
-          borderRadius: BorderRadius.all(Radius.circular(20))),
-      height: 80,
-      width: 250,
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black54, width: 2),
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-          child: InkWell(
-            onTap: () => null,
-            child: Container(
-              child: Row(
+        color: Color.fromARGB(255, 220, 218, 254),
+      ),
+      height: height,
+      width: 400,
+      child: InkWell(
+        onTap: onpressed,
+        child: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: iconsize,
+              ),
+              VerticalDivider(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.dashboard_rounded,
-                    size: 50,
-                  ),
-                  VerticalDivider(),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Dashboard',
-                        style: GoogleFonts.workSans(
-                          fontSize: 25,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
                   ),
                 ],
               ),
-            ),
+            ],
           ),
         ),
       ),
@@ -124,6 +128,7 @@ class RButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool enabled;
   final Widget icon;
+
   final EdgeInsets padding;
   final double elevation;
 
@@ -191,7 +196,7 @@ class Rtextfield extends StatelessWidget {
       this.fontSize = 20,
       this.height = 80,
       this.color = Colors.blue,
-      this.boxcolor = Colors.blueAccent,
+      this.boxcolor = Colors.transparent,
       this.inputType = TextInputType.text,
       this.enabled = true,
       this.icon,
@@ -210,6 +215,8 @@ class Rtextfield extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 10, 5),
           child: TextField(
+              minLines: 1,
+              maxLines: 5,
               keyboardType: inputType,
               style: GoogleFonts.workSans(fontSize: fontSize, color: textColor),
               decoration: InputDecoration(
@@ -271,7 +278,7 @@ class _DDDState extends State<DDD> {
                 child: Center(
                   child: Text(
                     value,
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
               ),
@@ -295,7 +302,6 @@ class DDtextfield extends StatefulWidget {
 }
 
 class _DDtextfieldState extends State<DDtextfield> {
-  int _counter = 0;
   String dropDownValue;
   List<String> cityList = [
     'Ajman',
@@ -306,11 +312,6 @@ class _DDtextfieldState extends State<DDtextfield> {
     'Sharjah',
     'Umm Al Quwain'
   ];
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   void initState() {
@@ -347,6 +348,7 @@ class _DDtextfieldState extends State<DDtextfield> {
                   value: dropDownValue,
                   style:
                       GoogleFonts.ptSans(fontSize: 20, color: Colors.black87),
+                  // ignore: non_constant_identifier_names
                   onChanged: (String Value) {
                     setState(() {
                       dropDownValue = Value;
@@ -366,81 +368,240 @@ class _DDtextfieldState extends State<DDtextfield> {
   }
 }
 
-//date field
+class Classnumbercard extends StatelessWidget {
+  final String text;
+  final int students;
 
-// class Datefield extends StatefulWidget {
-//   Datefield({Key key}) : super(key: key);
+  const Classnumbercard({this.text = "12th", this.students = 60});
 
-//   @override
-//   _DatefieldState createState() => _DatefieldState();
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      width: 100,
+      height: 100,
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Studentclasslistscreen()),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Center(
+            child: Column(
+              children: [
+                Text(
+                  text,
+                  style: TextStyle(fontSize: 40),
+                ),
+                Text(
+                  students.toString(),
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
-// class _DatefieldState extends State<Datefield> {
-//   String _selectedDate = '';
-//   String _dateCount = '';
-//   String _range = '';
-//   String _rangeCount = '';
+class Detalslist extends StatefulWidget {
+  Detalslist({Key key}) : super(key: key);
 
-// setState(() {
-//       if (args.value is PickerDateRange) {
-//         _range =
-//             DateFormat('dd/MM/yyyy').format(args.value.startDate).toString() +
-//                 ' - ' +
-//                 DateFormat('dd/MM/yyyy')
-//                     .format(args.value.endDate ?? args.value.startDate)
-//                     .toString();
-//       } else if (args.value is DateTime) {
-//         _selectedDate = args.value;
-//       } else if (args.value is List<DateTime>) {
-//         _dateCount = args.value.length.toString();
-//       } else {
-//         _rangeCount = args.value.length.toString();
-//       }
-//     }});
+  @override
+  _DetalslistState createState() => _DetalslistState();
+}
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//         decoration: BoxDecoration(
-//             color: Color.fromARGB(255, 220, 218, 254),
-//             borderRadius: BorderRadius.all(Radius.circular(20))),
-//         height: 65,
-//         width: 200,
-//         child: Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: Stack(
-//               children: <Widget>[
-//                 Positioned(
-//                   left: 0,
-//                   right: 0,
-//                   top: 0,
-//                   height: 70,
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                     mainAxisSize: MainAxisSize.max,
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: <Widget>[
-//                       Text('Selected date: '),
-//                       Text('Selected date count: '),
-//                       Text('Selected range: '),
-//                       Text('Selected ranges count: ')
-//                     ],
-//                   ),
-//                 ),
-//                 Positioned(
-//                   left: 0,
-//                   top: 80,
-//                   right: 0,
-//                   bottom: 0,
-//                   child: SfDateRangePicker(
-//                     onSelectionChanged: _onSelectionChanged,
-//                     selectionMode: DateRangePickerSelectionMode.range,
-//                     initialSelectedRange: PickerDateRange(
-//                         DateTime.now().subtract(const Duration(days: 4)),
-//                         DateTime.now().add(const Duration(days: 3))),
-//                   ),
-//                 )
-//               ],
-//             )));
-//   }
-// }
+class _DetalslistState extends State<Detalslist> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 80,
+                      child: Text(
+                        "Name",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      ":",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 250,
+                      child: Text(
+                        "Mr. Student",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 80,
+                      child: Text(
+                        "Roll No.",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      ":",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 250,
+                      child: Text(
+                        "3290",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 80,
+                      child: Text(
+                        "Father's Name",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      ":",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Mr. Father",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 80,
+                      child: Text(
+                        "Address",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      ":",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 250,
+                      child: Text(
+                        "This is a very very very very long address of the " +
+                            "student of bkd school",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

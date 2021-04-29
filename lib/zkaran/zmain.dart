@@ -1,6 +1,10 @@
+import 'package:bkdschool/zkaran/Screens/Allstudentlist.dart';
+import 'package:bkdschool/zkaran/Screens/Studentdetails.dart';
+import 'package:bkdschool/zkaran/Screens/Testscreens.dart/Testpage.dart';
+import 'package:bkdschool/zkaran/adminscreen.dart';
+import 'package:bkdschool/zkaran/Screens/allclasslist.dart';
 import 'package:bkdschool/zkaran/registration.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/material.dart';
 import 'package:bkdschool/zkaran/BuildItems.dart';
 import 'package:bkdschool/zkaran/aboutdetails.dart';
@@ -10,8 +14,10 @@ import 'package:bkdschool/zkaran/chatscreen.dart';
 import 'package:bkdschool/zkaran/dashitem.dart';
 import 'package:bkdschool/zkaran/notificationcard.dart';
 import 'package:bkdschool/zkaran/prifilecard.dart';
-import 'package:bkdschool/zkaran/profilecardmenu.dart';
+import 'package:bkdschool/zkaran/build/Studentprofilecard.dart';
 import 'package:bkdschool/zkaran/tabview.dart';
+
+import 'Screens/allteacherlist.dart';
 
 class Hschool extends StatelessWidget {
   const Hschool({Key key}) : super(key: key);
@@ -100,8 +106,85 @@ class Hschool extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ContactItem(),
+                  child: GroupItem(),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    child: RButton(
+                        text: "Admin Screen",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Adminscreen()),
+                          );
+                        })),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    child: RButton(
+                        text: "Student Details",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Studentdetails()),
+                          );
+                        })),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    child: RButton(
+                        text: "All Classes",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Allclasslist()),
+                          );
+                        })),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    child: RButton(
+                        text: "student",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Allstudentlist()),
+                          );
+                        })),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    child: RButton(
+                        text: "Testpage",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Testpage()),
+                          );
+                        })),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    child: RButton(
+                        text: "All Teachers",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Allteachers()),
+                          );
+                        })),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -142,12 +225,12 @@ class Hschool extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(child: toatalitem()),
+                child: Container(child: Toatalitem()),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  child: profilecard(),
+                  child: Profilecard(),
                 ),
               ),
               Padding(
@@ -158,11 +241,15 @@ class Hschool extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(child: profilecardmenu()),
+                child: Container(child: Studentprofilecard()),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(child: Allcategorydata()),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(child: Studentprofilecard()),
               ),
             ],
           ),

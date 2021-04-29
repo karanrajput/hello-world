@@ -1,7 +1,6 @@
+import 'package:bkdschool/zkaran/adminscreen.dart';
 import 'package:bkdschool/zkaran/buttons.dart';
-import 'package:bkdschool/zkaran/registration.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Registernumber extends StatefulWidget {
   Registernumber({Key key}) : super(key: key);
@@ -46,11 +45,15 @@ class _RegisternumberState extends State<Registernumber> {
                   height: 50,
                 ),
                 RButton(
-                  text: "Register",
-                  textColor: Colors.black,
-                  color: Color.fromARGB(255, 220, 218, 254),
-                  onPressed: () {},
-                )
+                    text: "Register",
+                    textColor: Colors.black,
+                    color: Color.fromARGB(255, 220, 218, 254),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Adminscreen()),
+                      );
+                    })
               ],
             ),
           ),
