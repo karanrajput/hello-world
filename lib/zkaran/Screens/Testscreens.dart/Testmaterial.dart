@@ -1,3 +1,5 @@
+import 'package:bkdschool/zkaran/Screens/Testscreens.dart/Oldquestionlist.dart';
+import 'package:bkdschool/zkaran/Screens/Testscreens.dart/Studenttest.dart';
 import 'package:flutter/material.dart';
 
 class Testmatirial extends StatelessWidget {
@@ -25,7 +27,7 @@ class OldtestCard extends StatelessWidget {
       child: InkWell(
         onTap: () => Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => null),
+          MaterialPageRoute(builder: (context) => Oldquestions()),
         ),
         child: Container(
           decoration: BoxDecoration(
@@ -128,7 +130,12 @@ class Starttestcard extends StatelessWidget {
                 Row(
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Studenttest()));
+                      },
                       child: Text(
                         "Start Test",
                         style: TextStyle(
@@ -193,103 +200,95 @@ class _QuestionsState extends State<Questions> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            op = options.op1;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "Option 1",
-                                style: TextStyle(fontSize: 25),
-                              ),
-                            ),
-                            // ignore: missing_required_param
-                            Radio(
-                              groupValue: op,
-                              value: options.op1,
-                            ),
-                          ],
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: op == options.op1
+                              ? Color.fromARGB(160, 61, 132, 184)
+                              : Colors.transparent),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              op = options.op1;
+                            });
+                          },
+                          child: Text(
+                            "Option 1",
+                            softWrap: true,
+                            style: TextStyle(fontSize: 25),
+                          ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            op = options.op2;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "Option 2",
-                                style: TextStyle(fontSize: 25),
-                              ),
-                            ),
-                            Radio(
-                              groupValue: op,
-                              value: options.op2,
-                              onChanged: (options value) {},
-                            ),
-                          ],
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: op == options.op2
+                              ? Color.fromARGB(160, 61, 132, 184)
+                              : Colors.transparent),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              op = options.op2;
+                            });
+                          },
+                          child: Text(
+                            "Option 2",
+                            softWrap: true,
+                            style: TextStyle(fontSize: 25),
+                          ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            op = options.op3;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "Option 3",
-                                style: TextStyle(fontSize: 25),
-                              ),
-                            ),
-                            Radio(
-                              groupValue: op,
-                              value: options.op3,
-                              onChanged: (options value) {},
-                            ),
-                          ],
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: op == options.op3
+                              ? Color.fromARGB(160, 61, 132, 184)
+                              : Colors.transparent),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              op = options.op3;
+                            });
+                          },
+                          child: Text(
+                            "Option 3",
+                            softWrap: true,
+                            style: TextStyle(fontSize: 25),
+                          ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            op = options.op4;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "Option 4",
-                                style: TextStyle(fontSize: 25),
-                              ),
-                            ),
-                            Radio(
-                              groupValue: op,
-                              value: options.op4,
-                              onChanged: (options value) {},
-                            ),
-                          ],
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: op == options.op4
+                              ? Color.fromARGB(160, 61, 132, 184)
+                              : Colors.transparent),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              op = options.op4;
+                            });
+                          },
+                          child: Text(
+                            "Option 4",
+                            softWrap: true,
+                            style: TextStyle(fontSize: 25),
+                          ),
                         ),
                       ),
                     ),

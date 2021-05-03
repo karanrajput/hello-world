@@ -1,4 +1,5 @@
 import 'package:bkdschool/zkaran/Screens/Allstudentlist.dart';
+import 'package:bkdschool/zkaran/Screens/Attendence/Attendencescreen.dart';
 import 'package:bkdschool/zkaran/Screens/Studentdetails.dart';
 import 'package:bkdschool/zkaran/Screens/Testscreens.dart/Testpage.dart';
 import 'package:bkdschool/zkaran/adminscreen.dart';
@@ -108,6 +109,19 @@ class Hschool extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: GroupItem(),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    child: RButton(
+                        text: "Attendence Screen",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Attendencescreen()),
+                          );
+                        })),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

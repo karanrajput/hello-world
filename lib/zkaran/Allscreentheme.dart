@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 
 class Globaltheme extends StatelessWidget {
   final Widget child;
-
-  const Globaltheme({Key key, this.child}) : super(key: key);
+  final String name;
+  final String sname;
+  const Globaltheme({
+    Key key,
+    this.child,
+    this.name = "Screen Name",
+    this.sname = "",
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +36,24 @@ class Globaltheme extends StatelessWidget {
                     expandedHeight: 160.0,
                     flexibleSpace: FlexibleSpaceBar(
                       centerTitle: true,
-                      title: Text(
-                        "All Teachers",
-                        style: TextStyle(fontSize: 30, color: Colors.black87),
+                      title: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            name,
+                            textAlign: TextAlign.center,
+                            style:
+                                TextStyle(fontSize: 25, color: Colors.black87),
+                          ),
+                          sname.isNotEmpty
+                              ? Text(
+                                  sname,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.black87),
+                                )
+                              : Container()
+                        ],
                       ),
                     ),
                   ),
