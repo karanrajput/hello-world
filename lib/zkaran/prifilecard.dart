@@ -2,17 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 
-class profilecard extends StatefulWidget {
-  profilecard({Key key}) : super(key: key);
+class Profilecard extends StatelessWidget {
+  final String text;
+  final String mail;
 
-  @override
-  _profilecardState createState() => _profilecardState();
-}
-
-class _profilecardState extends State<profilecard> {
-  final imagepicker = ImagePicker();
+  const Profilecard({this.text = "Mr Person", this.mail = "person@mail.com"});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +46,7 @@ class _profilecardState extends State<profilecard> {
           ),
           Container(
             child: Text(
-              "Mr Harsh Dman",
+              text,
               style: GoogleFonts.workSans(
                 fontSize: 25,
                 color: Colors.black87,
@@ -60,7 +55,7 @@ class _profilecardState extends State<profilecard> {
           ),
           Container(
             child: Text(
-              "harsh@dman.com",
+              mail,
               style: GoogleFonts.ptSans(
                 fontSize: 18,
                 color: Colors.black87,

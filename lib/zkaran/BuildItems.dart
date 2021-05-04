@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bkdschool/zkaran/chatscreen.dart';
 
-class ContactItem extends StatelessWidget {
+class GroupItem extends StatelessWidget {
   // final FContact contact;
 
   @override
@@ -16,10 +16,8 @@ class ContactItem extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.green,
-              border: Border.all(
-                color: Colors.green[500],
-              ),
+              color: Color.fromARGB(150, 184, 255, 97),
+              border: Border.all(color: Color.fromARGB(150, 184, 255, 97)),
               borderRadius: BorderRadius.all(Radius.circular(20))),
           height: 100,
           child: Padding(
@@ -32,23 +30,16 @@ class ContactItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Eglish Class",
-                      style: GoogleFonts.mcLaren(
-                        fontSize: 25,
-                        letterSpacing: 1.4,
-                        color: Colors.white,
-                      ),
+                      "English Class",
+                      style: TextStyle(
+                          color: Colors.black, fontFamily: "sf", fontSize: 35),
                     ),
                     // Icon(Icons.arrow_forward_ios_sharp)
                   ],
                 ),
                 Text(
                   "Assignment Last Date",
-                  style: GoogleFonts.mcLaren(
-                    fontSize: 20,
-                    letterSpacing: 1,
-                    color: Color.fromARGB(250, 222, 255, 231),
-                  ),
+                  style: TextStyle(fontFamily: "sf", fontSize: 20),
                 )
               ],
             ),
