@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:bkdschool/data/services/services.dart';
 
 export 'buttons.dart';
 export 'textfields.dart';
 export 'RSliderScaffold.dart';
+export 'subwidgets/classwidget.dart';
+export 'subwidgets/subjectwidget.dart';
 
 //Old RScaffold
 Widget rScaffold(
@@ -137,4 +141,16 @@ Widget makeCenterContainer(Widget child) {
     alignment: Alignment.center,
     child: child,
   );
+}
+
+//
+//Spacer
+Widget makeSpace(double space, [bool width = false]) {
+  return width
+      ? SizedBox(
+          width: space,
+        )
+      : SizedBox(
+          height: space,
+        );
 }
