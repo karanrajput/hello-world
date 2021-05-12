@@ -1,13 +1,21 @@
 import 'dart:ui';
 
+import 'package:bkdschool/RWidgets/misc.dart';
 import 'package:flutter/material.dart';
 import 'package:bkdschool/data/services/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 export 'buttons.dart';
 export 'textfields.dart';
 export 'RSliderScaffold.dart';
 export 'subwidgets/classwidget.dart';
 export 'subwidgets/subjectwidget.dart';
+export 'subwidgets/messagewidget.dart';
+export 'subwidgets/userinfowidget.dart';
+export 'subwidgets/subjectchatwidget.dart';
+
+export 'misc.dart';
+export 'RSliderScaffold.dart';
 
 //Old RScaffold
 Widget rScaffold(
@@ -33,8 +41,10 @@ class RSimpleScaffold extends StatelessWidget {
   final Widget child;
   final List<Widget> actions;
   final Widget fab;
+  final FloatingActionButtonLocation fabLocation;
   final Color bgColor;
   final Color color;
+  final Widget bottomNavBar;
 
   const RSimpleScaffold(
       {Key key,
@@ -42,21 +52,23 @@ class RSimpleScaffold extends StatelessWidget {
       this.child,
       this.actions,
       this.fab,
-      this.bgColor = Globals.colorMain,
-      this.color = Colors.white})
+      this.bgColor = Colors.transparent,
+      this.color = Colors.black,
+      this.bottomNavBar,
+      this.fabLocation})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
+    return RGradientBackground(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           foregroundColor: color,
+          iconTheme: IconThemeData(color: color),
           title: Text(
             title,
-            style: TextStyle(color: color),
+            style: TextStyle(color: color, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
           elevation: 0,
@@ -64,7 +76,9 @@ class RSimpleScaffold extends StatelessWidget {
           actions: actions,
         ),
         floatingActionButton: fab,
+        floatingActionButtonLocation: fabLocation,
         body: child,
+        bottomNavigationBar: bottomNavBar,
       ),
     );
   }
@@ -92,19 +106,22 @@ Widget makeLoadingIndicator(String message) {
 //Simple Text with options
 //
 Widget makeText(String text,
-    {FontWeight weight = FontWeight.normal,
+    {FontWeight weight = FontWeight.w600,
     double fontSize = 15,
+    TextStyle googleFont,
     Color color = Colors.black,
     FontStyle fontStyle = FontStyle.normal,
     TextAlign alignment = TextAlign.center}) {
   return Text(
     text,
     textAlign: alignment,
-    style: TextStyle(
-        color: color,
-        fontWeight: weight,
-        fontSize: fontSize,
-        fontStyle: fontStyle),
+    style: googleFont != null
+        ? googleFont
+        : GoogleFonts.poppins(
+            color: color,
+            fontWeight: weight,
+            fontSize: fontSize,
+            fontStyle: fontStyle),
   );
 }
 
@@ -153,4 +170,55 @@ Widget makeSpace(double space, [bool width = false]) {
       : SizedBox(
           height: space,
         );
+}
+
+//
+//ScrollView
+//
+
+Widget makeScroll({@required Widget child}) {
+  return SingleChildScrollView(
+    child: child,
+    physics: BouncingScrollPhysics(),
+    clipBehavior: Clip.antiAliasWithSaveLayer,
+  );
+}
+
+//
+//Card Container
+//
+
+Widget makeCardContainer({
+  @required Widget child,
+  Color color = Colors.white,
+  int alpha = 50,
+  Color borderColor = Colors.black,
+  int borderAlpha = 40,
+  double borderWidth = 1,
+  double radius = 20,
+  double padding = 10,
+  bool clickable = false,
+  VoidCallback onPressed,
+}) {
+  var maincontainer = Container(
+    decoration: BoxDecoration(
+      color: color.withAlpha(alpha),
+      borderRadius: BorderRadius.circular(radius),
+      border: Border.all(
+        width: borderWidth,
+        color: borderColor.withAlpha(borderAlpha),
+      ),
+    ),
+    child: Padding(
+      padding: EdgeInsets.all(padding),
+      child: child,
+    ),
+  );
+  return clickable
+      ? InkWell(
+          splashColor: Globals.colorMain,
+          borderRadius: BorderRadius.circular(radius),
+          onTap: onPressed,
+          child: maincontainer)
+      : maincontainer;
 }

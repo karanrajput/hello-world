@@ -1,3 +1,5 @@
+import 'package:bkdschool/RWidgets/RWidgets.dart';
+import 'package:bkdschool/data/services/services.dart';
 import 'package:flutter/material.dart';
 
 class Globals {
@@ -17,7 +19,7 @@ class Globals {
   //
   //Colors
   //
-  static const Color colorMain = Colors.teal;
+  static const Color colorMain = Color(0xFFF23D3D);
   static const Color colorSecondary = Colors.pink;
 
   ///////////////////
@@ -40,5 +42,18 @@ class Globals {
       {Color bgcolor = Colors.black45, TextStyle style}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message, style: style), backgroundColor: bgcolor));
+  }
+
+  //Popup
+  static makeRPopup(Widget popup, String tag) {
+    navigation.currentState.push(RPopupPageRoute(builder: (c) {
+      return Center(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(32, 32, 32,
+              MediaQuery.of(navigation.currentContext).viewInsets.bottom + 16),
+          child: Hero(tag: tag, child: popup),
+        ),
+      );
+    }));
   }
 }

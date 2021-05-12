@@ -8,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -24,8 +25,8 @@ void main() async {
   await Hive.initFlutter();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-  ));
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark));
 
   runApp(MainApp());
 }
@@ -45,11 +46,14 @@ class MainApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         navigatorKey: Globals.navigation,
         theme: ThemeData(
-          //fontFamily: 'sf',
-          brightness: Brightness.light,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: EntryScreen(),
+            textTheme: GoogleFonts.poppinsTextTheme(),
+            brightness: Brightness.light,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            primaryColor: Globals.colorMain,
+            accentColor: Globals.colorMain,
+            textSelectionTheme:
+                TextSelectionThemeData(cursorColor: Globals.colorMain)),
+        home: Hschool(),
       ),
     );
   }

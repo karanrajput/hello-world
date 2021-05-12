@@ -12,7 +12,7 @@ class EntryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RSimpleScaffold(
-      title: "Account Setup",
+      title: "",
       child: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
           if (state is UserStateLoading) {

@@ -21,12 +21,10 @@ class AccountSetupPage extends StatelessWidget {
       RTextField(
         controller: nameController,
         keyboardtype: TextInputType.name,
-        title: "Name",
       ),
       RTextField(
         controller: typeController,
         keyboardtype: TextInputType.text,
-        title: "Type",
       ),
       RButton(
         text: "Complete Setup",

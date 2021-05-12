@@ -10,7 +10,8 @@ extension RUserTypeExtension on RUserType {
 //
 
 class RUser {
-  final uid;
+  String uid;
+  final String rollno;
   final String username;
   final String name;
   final RUserType type;
@@ -18,11 +19,14 @@ class RUser {
   final String contactnumber;
   final String fathername;
   final String mothername;
+  final String classaccess;
 
   final bool completeUser;
 
   RUser(
-      {this.uid,
+      {this.classaccess,
+      this.rollno,
+      this.uid,
       this.contactnumber,
       this.fathername,
       this.mothername,
@@ -34,6 +38,7 @@ class RUser {
 
   Map<String, dynamic> toMap() => {
         'uid': uid,
+        'rollno': rollno,
         'contactnumber': contactnumber,
         'fathername': fathername,
         'mothername': mothername,
@@ -41,12 +46,15 @@ class RUser {
         'name': name,
         'type': type.value,
         'email': email,
-        'completeuser': completeUser
+        'completeuser': completeUser,
+        'class_access': classaccess,
       };
 
   factory RUser.fromMap(Map<String, dynamic> map) {
     return RUser(
         uid: map['uid'],
+        classaccess: map['class_access'] ?? '',
+        rollno: map['rollno'] ?? "",
         contactnumber: map['contactnumber'] ?? "",
         fathername: map['fathername'] ?? "",
         mothername: map['mothername'] ?? "",

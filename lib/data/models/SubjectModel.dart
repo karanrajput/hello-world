@@ -6,7 +6,7 @@ class RSubject {
   final String name;
 
   RSubject({
-    this.docid,
+    this.rclass,
     this.name,
   });
 

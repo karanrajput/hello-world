@@ -75,18 +75,25 @@ class RButton extends StatelessWidget {
   final Widget icon;
   final EdgeInsets padding;
   final double elevation;
+  final bool expand;
+  final bool centerText;
+  final Widget child;
 
-  const RButton(
-      {this.text = "Button",
-      this.onPressed,
-      this.borderRadius = 50,
-      this.fontSize = 18,
-      this.color = Globals.colorMain,
-      this.enabled = true,
-      this.icon,
-      this.textColor = Colors.white,
-      this.padding = const EdgeInsets.all(0),
-      this.elevation = 2});
+  const RButton({
+    this.text = "Button",
+    this.onPressed,
+    this.borderRadius = 15,
+    this.fontSize = 18,
+    this.color = Globals.colorMain,
+    this.enabled = true,
+    this.icon,
+    this.textColor = Colors.white,
+    this.padding = const EdgeInsets.all(0),
+    this.elevation = 0,
+    this.expand = false,
+    this.centerText,
+    this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -94,16 +101,23 @@ class RButton extends StatelessWidget {
       onPressed: onPressed,
       child: Padding(
         padding: padding,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            icon != null ? icon : Container(),
-            SizedBox(
-              width: icon != null ? 10 : 0,
-            ),
-            makeText(text, fontSize: fontSize, color: textColor)
-          ],
-        ),
+        child: child == null
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+                children: [
+                  icon != null ? icon : Container(),
+                  SizedBox(
+                    width: icon != null ? 10 : 0,
+                  ),
+                  makeText(text, fontSize: fontSize, color: textColor)
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+                children: [child],
+              ),
       ),
       style: ButtonStyle(
           elevation: MaterialStateProperty.all(elevation),
@@ -139,9 +153,9 @@ class RIconButton extends StatelessWidget {
       this.enabled = true,
       this.icon,
       this.padding = const EdgeInsets.all(12),
-      this.elevation = 10,
+      this.elevation = 0,
       this.iconColor = Colors.white,
-      this.iconSize = 35});
+      this.iconSize = 25});
 
   @override
   Widget build(BuildContext context) {

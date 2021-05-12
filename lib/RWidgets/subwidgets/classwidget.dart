@@ -14,13 +14,10 @@ class RClassItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(5),
-      child: InkWell(
-        onTap: onPressed,
-        child: Container(
-          height: 40,
-          color: Globals.colorMain,
-          child: makeCenterContainer(makeText(rclass.name)),
-        ),
+      child: makeCardContainer(
+        clickable: true,
+        onPressed: onPressed,
+        child: makeCenterContainer(makeText(rclass.name)),
       ),
     );
   }

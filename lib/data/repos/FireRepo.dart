@@ -14,6 +14,8 @@ class FireRepo {
 
   final db = FirebaseFirestore.instance;
 
+  RUser currentUser;
+
   static CollectionReference usersCollection;
   static CollectionReference classesCollection;
 
@@ -30,7 +32,7 @@ class FireRepo {
           .collection('messages');
   //
   //
-  //Main Functions
+  //User
   //
 
   Future<void> createNewUser(RUser user) async {
@@ -45,14 +47,60 @@ class FireRepo {
       return null;
   }
 
+  Stream<List<RUser>> getAllUsersStream(RUserType type) async* {
+    yield* usersCollection.where('type', isEqualTo: type.value).snapshots().map(
+        (event) => event.docs.map((e) => RUser.fromMap(e.data())).toList());
+  }
+
+  Stream<List<RUser>> getAllStudentsOfClass(RClass rclass) async* {
+    yield* usersCollection
+        .where('class_access', isEqualTo: rclass.docid)
+        .snapshots()
+        .map(
+            (event) => event.docs.map((e) => RUser.fromMap(e.data())).toList());
+  }
+
+  Future<bool> isRegisteredUser(String username) async {
+    var r = await FireRepo.usersCollection
+        .where('username', isEqualTo: username)
+        .get();
+    return r.size >= 1 ? true : false;
+  }
+
   //
-  //
+  // Class
   //
   Future<List<RClass>> getClassesList() async {
     final snap = await classesCollection.get();
     return snap.docs
         .map((e) => RClass.fromMap(e.data())..docid = e.id)
         .toList();
+  }
+
+  Future<RClass> getClassFromID(String docid) async {
+    var snap = await classesCollection.doc(docid).get();
+    return RClass.fromMap(snap.data())..docid = docid;
+  }
+
+  Stream<List<RClass>> getClassesListStream() async* {
+    yield* classesCollection.snapshots().map((event) =>
+        event.docs.map((e) => RClass.fromMap(e.data())..docid = e.id).toList());
+  }
+
+  Stream<List<RSubject>> getSubjectsListStream(RClass rclass) async* {
+    yield* getSubjectsCollection(rclass).snapshots().map((event) => event.docs
+        .map((e) => RSubject.fromMap(e.data())
+          ..docid = e.id
+          ..rclass = rclass)
+        .toList());
+  }
+
+  Future<void> addNewClass(RClass rclass) async {
+    await classesCollection.add(rclass.toMap());
+  }
+
+  Future<void> addNewSubject(RSubject subject) async {
+    await getSubjectsCollection(subject.rclass).add(subject.toMap());
   }
 
   Future<List<RSubject>> getSubjectsOfClass(RClass rclass) async {
@@ -65,6 +113,7 @@ class FireRepo {
   }
 
   //
+  //Message
   //
 
   Future<List<RMessage>> getMessages(RSubject subject) async {

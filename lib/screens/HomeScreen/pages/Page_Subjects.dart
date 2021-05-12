@@ -2,6 +2,7 @@ import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/bloc/class_bloc/class_bloc.dart';
 import 'package:bkdschool/data/models/ClassModel.dart';
 import 'package:bkdschool/data/models/SubjectModel.dart';
+import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/services/globals.dart';
 import 'package:bkdschool/screens/ChatScreen/ChatScreen.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,20 @@ class SubjectsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<ClassBloc>(context).add(ClassEventLoadSubjectList(rclass));
-    return RSimpleScaffold(
-      title: rclass.name,
-      child: BlocBuilder<ClassBloc, ClassState>(
-        builder: (context, state) {
-          if (state is ClassStateSubjectListLoaded) {
-            return _makeSubjectsList(context, state.subjects);
+    return Container(
+      child: StreamBuilder<List<RSubject>>(
+        stream: FireRepo.instance.getSubjectsListStream(rclass),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data.length == 0) {
+              return makeCenterContainer(makeIconText(
+                  "No Data", Icons.hourglass_empty,
+                  color: Colors.black));
+            } else {
+              return _makeSubjectsList(context, snapshot.data);
+            }
+          } else if (snapshot.hasError) {
+            return makeCenterContainer(makeIconText("Error", Icons.error));
           } else {
             return makeCenterContainer(makeLoadingIndicator(""));
           }
@@ -33,7 +41,7 @@ class SubjectsPage extends StatelessWidget {
     return ListView.builder(
         itemCount: subjects.length,
         itemBuilder: (contextn, index) {
-          return RSubjectItemWidget(
+          return RSubjectChatItemWidget(
             subject: subjects[index],
             onPressed: () {
               Globals.navigateScreen(ChatScreen(

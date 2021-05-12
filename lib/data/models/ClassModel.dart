@@ -15,7 +15,7 @@ class RClass {
     return {
       'code': code,
       'name': name,
-      'student_access': studentAccess,
+      //'student_access': studentAccess,
     };
   }
 
@@ -23,7 +23,7 @@ class RClass {
     return RClass(
       code: map['code'],
       name: map['name'],
-      studentAccess: List<String>.from(map['student_access']),
+      //studentAccess: List<String>.from(map['student_access']) ?? null,
     );
   }
 }

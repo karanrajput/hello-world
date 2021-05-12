@@ -1,6 +1,7 @@
 import 'package:bkdschool/data/models/UserModel.dart';
 import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class UserRepo {
@@ -12,7 +13,13 @@ class UserRepo {
         _gauth = GoogleSignIn();
 
   Future<bool> isLoggedIn() async {
-    return _auth.currentUser != null;
+    var user = _auth.currentUser;
+    if (user != null) {
+      FireRepo.instance.currentUser = await getUser();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<bool> logInWithUsername(String username, String password) async {
@@ -20,12 +27,12 @@ class UserRepo {
     return b;
   }
 
-  Future<bool> signUpWithUsername(RUser ruser, String password) async {
-    final b = await _signUpWithEmail(ruser.username + '@bkd.com', password);
-    if (b) {
-      await FireRepo.instance.createNewUser(ruser);
+  static Future<bool> signUpWithUsername(RUser ruser, String password) async {
+    final u = await _signUpWithEmail(ruser.username + '@bkd.com', password);
+    if (u != null) {
+      await FireRepo.instance.createNewUser(ruser..uid = u.uid);
     }
-    return b;
+    return u != null;
   }
 
   Future<bool> _logInWithEmail(String email, String password) async {
@@ -34,17 +41,21 @@ class UserRepo {
         .catchError((e) {
       throw Exception(e.toString());
     });
-    final user = getUser();
+    final user = getFirebaseUser();
+    if (user != null) {
+      FireRepo.instance.currentUser = await getUser();
+    }
     return user != null;
   }
 
-  Future<bool> _signUpWithEmail(String email, String password) async {
-    final creds = await _auth
+  static Future<User> _signUpWithEmail(String email, String password) async {
+    FirebaseApp tapp = await Firebase.initializeApp(
+        name: 'Secondary', options: Firebase.app().options);
+    final creds = await FirebaseAuth.instanceFor(app: tapp)
         .createUserWithEmailAndPassword(email: email, password: password)
-        .catchError((e) {
-      throw Exception(e.toString());
-    });
-    return creds.user != null;
+        .catchError((e) {});
+    await tapp.delete();
+    return creds.user;
   }
 
   Future<bool> logInWithGoogle() async {
