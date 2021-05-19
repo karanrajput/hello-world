@@ -17,7 +17,11 @@ class RSubjectItemWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(5),
       child: makeCardContainer(
-        color: selected ? Globals.colorMain : Colors.white,
+        color: selected
+            ? Globals.colorMain
+            : subject.isOptional
+                ? Colors.blueAccent
+                : Colors.white,
         alpha: selected ? 200 : 50,
         clickable: true,
         onPressed: onPressed,

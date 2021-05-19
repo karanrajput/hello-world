@@ -45,8 +45,8 @@ class Globals {
   }
 
   //Popup
-  static makeRPopup(Widget popup, String tag) {
-    navigation.currentState.push(RPopupPageRoute(builder: (c) {
+  static makeRPopup(Widget popup, String tag) async {
+    return await navigation.currentState.push(RPopupPageRoute(builder: (c) {
       return Center(
         child: Padding(
           padding: EdgeInsets.fromLTRB(32, 32, 32,

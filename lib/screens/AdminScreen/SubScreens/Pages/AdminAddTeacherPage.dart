@@ -27,7 +27,11 @@ class _AdminAddTeacherPageState extends State<AdminAddTeacherPage> {
 
   _addTeacherClicked(BuildContext context) async {
     //TODO: Add Validation of fields
-
+    //validation
+    if (usernameController.text.length < 4) {
+      Globals.showSnackbar(context, "Username less then 4 Characters");
+      return;
+    }
     setState(() {
       isLoading = true;
     });
@@ -61,6 +65,22 @@ class _AdminAddTeacherPageState extends State<AdminAddTeacherPage> {
     Navigator.of(context).pop();
   }
 
+  _updateTeacherClicked(BuildContext context) {
+    var ruser = RUser(
+      rollno: rollnoController.text,
+      name: nameController.text,
+      contactnumber: phoneController.text,
+      email: emailController.text,
+      type: RUserType.TEACHER,
+      completeUser: true,
+      username: usernameController.text,
+    );
+
+    FireRepo.instance.updateUser(ruser..uid = widget.ruser.uid);
+
+    Navigator.of(context).pop();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -85,47 +105,48 @@ class _AdminAddTeacherPageState extends State<AdminAddTeacherPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Username",
                 controller: usernameController,
               ),
               makeSpace(5),
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Password",
                 controller: passwordController,
                 keyboardtype: TextInputType.visiblePassword,
               ),
               makeSpace(30),
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Name",
                 controller: nameController,
                 keyboardtype: TextInputType.name,
               ),
               makeSpace(5),
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "ID Number",
                 controller: rollnoController,
                 keyboardtype: TextInputType.number,
               ),
               makeSpace(5),
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Phone",
                 controller: phoneController,
                 keyboardtype: TextInputType.phone,
               ),
               makeSpace(5),
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Email",
                 controller: emailController,
                 keyboardtype: TextInputType.emailAddress,
               ),
               makeSpace(20),
-              _makeButton()
+              isReadOnly
+                  ? makeeditbuttons()
+                  : RButton(
+                      expand: true,
+                      text: "Add",
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      onPressed: () => _addTeacherClicked(context),
+                    )
             ],
           ),
         ),
@@ -133,34 +154,33 @@ class _AdminAddTeacherPageState extends State<AdminAddTeacherPage> {
     );
   }
 
-  Widget _makeButton() {
-    if (isReadOnly) {
-      return RButton(
-        text: "Edit",
-        enabled: !isLoading,
-        expand: true,
-        color: Colors.black26,
-        textColor: Colors.black,
-        child: isLoading
-            ? CircularProgressIndicator(
-                backgroundColor: Colors.white,
-              )
-            : null,
-        padding: EdgeInsets.symmetric(vertical: 15),
-      );
-    } else {
-      return RButton(
-        onPressed: () => _addTeacherClicked(context),
-        text: "Add Teacher",
-        enabled: !isLoading,
-        expand: true,
-        child: isLoading
-            ? CircularProgressIndicator(
-                backgroundColor: Colors.white,
-              )
-            : null,
-        padding: EdgeInsets.symmetric(vertical: 15),
-      );
-    }
+  makeeditbuttons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(
+          child: RButton(
+            expand: true,
+            text: "Delete",
+            padding: EdgeInsets.symmetric(vertical: 15),
+            onPressed: () {
+              FireRepo.instance.deleteUser(widget.ruser);
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        VerticalDivider(),
+        Expanded(
+          child: RButton(
+            color: Colors.green,
+            expand: true,
+            text: "Update",
+            padding: EdgeInsets.symmetric(vertical: 15),
+            onPressed: () => _updateTeacherClicked(context),
+          ),
+        )
+      ],
+    );
   }
 }

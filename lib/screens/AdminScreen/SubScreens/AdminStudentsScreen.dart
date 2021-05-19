@@ -24,6 +24,7 @@ class _AdminStudentsScreenState extends State<AdminStudentsScreen> {
     Globals.makeRPopup(
       AdminAddStudentPage(
         ruser: ruser,
+        rclass: widget.rclass,
       ),
       '',
     );

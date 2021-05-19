@@ -5,6 +5,7 @@ import 'package:bkdschool/data/models/UserModel.dart';
 import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/repos/UserRepo.dart';
 import 'package:bkdschool/data/services/globals.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -71,6 +72,25 @@ class _AdminAddStudentPageState extends State<AdminAddStudentPage> {
     Navigator.of(context).pop();
   }
 
+  _updateStudentClicked(BuildContext context) {
+    var ruser = RUser(
+      rollno: rollnoController.text,
+      name: nameController.text,
+      contactnumber: phoneController.text,
+      email: emailController.text,
+      fathername: fathernameController.text,
+      mothername: mothernameController.text,
+      type: RUserType.STUDENT,
+      completeUser: true,
+      username: usernameController.text,
+      classaccess: widget.rclass.docid,
+    );
+
+    FireRepo.instance.updateUser(ruser..uid = widget.ruser.uid);
+
+    Navigator.of(context).pop();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -97,61 +117,73 @@ class _AdminAddStudentPageState extends State<AdminAddStudentPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Username",
                 controller: usernameController,
               ),
               makeSpace(5),
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Password",
                 controller: passwordController,
                 keyboardtype: TextInputType.visiblePassword,
               ),
               makeSpace(30),
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Name",
                 controller: nameController,
                 keyboardtype: TextInputType.name,
               ),
               makeSpace(5),
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Roll Number",
                 controller: rollnoController,
                 keyboardtype: TextInputType.number,
               ),
               makeSpace(5),
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Phone",
                 controller: phoneController,
                 keyboardtype: TextInputType.phone,
               ),
               makeSpace(5),
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Email",
                 controller: emailController,
                 keyboardtype: TextInputType.emailAddress,
               ),
               makeSpace(5),
+              // Form(
+              //   autovalidateMode: AutovalidateMode.always,
+              //   child: TextFormField(
+              //     validator: (value) => EmailValidator.validate(value)
+              //         ? null
+              //         : "Please enter a valid email",
+              //   ),
+              // ),
+              makeSpace(5),
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Father Name",
                 controller: fathernameController,
                 keyboardtype: TextInputType.name,
               ),
               makeSpace(5),
               RTextField(
-                isReadOnly: isReadOnly,
                 label: "Mother Name",
                 controller: mothernameController,
                 keyboardtype: TextInputType.name,
               ),
+              CheckboxListTile(
+                  title: Text("List of Optional Subjects"),
+                  value: false,
+                  onChanged: (newValue) {}),
               makeSpace(20),
-              _makeButton()
+              isReadOnly
+                  ? makeeditbuttons()
+                  : RButton(
+                      expand: true,
+                      text: "Add",
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      onPressed: () => _addStudentClicked(context),
+                    )
             ],
           ),
         ),
@@ -159,34 +191,33 @@ class _AdminAddStudentPageState extends State<AdminAddStudentPage> {
     );
   }
 
-  Widget _makeButton() {
-    if (isReadOnly) {
-      return RButton(
-        text: "Edit",
-        enabled: !isLoading,
-        expand: true,
-        color: Colors.black26,
-        textColor: Colors.black,
-        child: isLoading
-            ? CircularProgressIndicator(
-                backgroundColor: Colors.white,
-              )
-            : null,
-        padding: EdgeInsets.symmetric(vertical: 15),
-      );
-    } else {
-      return RButton(
-        onPressed: () => _addStudentClicked(context),
-        text: "Add Student",
-        enabled: !isLoading,
-        expand: true,
-        child: isLoading
-            ? CircularProgressIndicator(
-                backgroundColor: Colors.white,
-              )
-            : null,
-        padding: EdgeInsets.symmetric(vertical: 15),
-      );
-    }
+  makeeditbuttons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(
+          child: RButton(
+            expand: true,
+            text: "Delete",
+            padding: EdgeInsets.symmetric(vertical: 15),
+            onPressed: () {
+              FireRepo.instance.deleteUser(widget.ruser);
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        VerticalDivider(),
+        Expanded(
+          child: RButton(
+            color: Colors.green,
+            expand: true,
+            text: "Update",
+            padding: EdgeInsets.symmetric(vertical: 15),
+            onPressed: () => _updateStudentClicked(context),
+          ),
+        )
+      ],
+    );
   }
 }
