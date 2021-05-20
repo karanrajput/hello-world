@@ -20,7 +20,7 @@ class Toatalitem extends StatelessWidget {
           // borderRadius: BorderRadius.all(Radius.circular(8))
         ),
         height: 80,
-        width: 200,
+        width: 220,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           child: InkWell(
