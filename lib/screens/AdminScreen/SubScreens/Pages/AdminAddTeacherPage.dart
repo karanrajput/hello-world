@@ -48,15 +48,12 @@ class _AdminAddTeacherPageState extends State<AdminAddTeacherPage> {
       contactnumber: phoneController.text,
       email: emailController.text,
       type: RUserType.TEACHER,
+      password: passwordController.text,
       completeUser: true,
       username: usernameController.text,
     );
 
-    bool result =
-        await UserRepo.signUpWithUsername(ruser, passwordController.text);
-    if (!result) {
-      Globals.showSnackbar(context, "Teacher Creation Failed");
-    }
+    await FireRepo.instance.createNewUser(ruser);
 
     Navigator.of(context).pop();
   }

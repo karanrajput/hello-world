@@ -2,8 +2,10 @@ import 'package:bkdschool/data/models/ClassModel.dart';
 import 'package:bkdschool/data/models/MessageModel.dart';
 import 'package:bkdschool/data/models/SubjectModel.dart';
 import 'package:bkdschool/data/models/UserModel.dart';
+import 'package:bkdschool/data/repos/ChatRepo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive/hive.dart';
 
 class FireRepo {
   static final FireRepo instance = FireRepo._internal();
@@ -15,11 +17,13 @@ class FireRepo {
   final db = FirebaseFirestore.instance;
 
   RUser currentUser;
+  Box saveBox;
 
   static CollectionReference usersCollection;
   static CollectionReference classesCollection;
 
-  Future<void> init() {
+  Future<void> init() async {
+    saveBox = await Hive.openBox('global');
     usersCollection = db.collection('users');
     classesCollection = db.collection('classes');
   }
@@ -34,30 +38,52 @@ class FireRepo {
   //
   //User
   //
+  //
 
   Future<void> createNewUser(RUser user) async {
-    await usersCollection.doc(user.uid).set(user.toMap());
+    await usersCollection.add(user.toMap());
+  }
+
+  Future<RUser> validateUserLoginInfo(String username, String password) async {
+    var r = await FireRepo.usersCollection
+        .where(
+          'username',
+          isEqualTo: username,
+        )
+        .where(
+          'password',
+          isEqualTo: password,
+        )
+        .get();
+    if (r.size >= 1) {
+      return RUser.fromMap(r.docs.first.data())..uid = r.docs.first.id;
+    } else {
+      return null;
+    }
   }
 
   Future<RUser> getRUserFromUID(String uid) async {
     final doc = await usersCollection.doc(uid).get();
     if (doc.exists) {
-      return RUser.fromMap(doc.data());
+      return RUser.fromMap(doc.data())..uid = uid;
     } else
       return null;
   }
 
   Stream<List<RUser>> getAllUsersStream(RUserType type) async* {
     yield* usersCollection.where('type', isEqualTo: type.value).snapshots().map(
-        (event) => event.docs.map((e) => RUser.fromMap(e.data())).toList());
+        (event) => event.docs
+            .map((e) => RUser.fromMap(e.data())..uid = e.id)
+            .toList());
   }
 
   Stream<List<RUser>> getAllStudentsOfClass(RClass rclass) async* {
     yield* usersCollection
         .where('class_access', isEqualTo: rclass.docid)
         .snapshots()
-        .map(
-            (event) => event.docs.map((e) => RUser.fromMap(e.data())).toList());
+        .map((event) => event.docs
+            .map((e) => RUser.fromMap(e.data())..uid = e.id)
+            .toList());
   }
 
   Future<bool> isRegisteredUser(String username) async {
@@ -112,18 +138,50 @@ class FireRepo {
         .toList();
   }
 
+  Future<RSubject> getSubjectFromID(String classid, String subid) async {
+    var r =
+        await getSubjectsCollection(RClass(docid: classid)).doc(subid).get();
+    return RSubject.fromMap(r.data())..docid = r.id;
+  }
+
   //
   //Message
   //
 
   Future<List<RMessage>> getMessages(RSubject subject) async {
-    final snap = await getMessagesCollection(subject).get();
+    var box = await ChatRepo.instance.getSubjectBox(subject.docid);
+    if (box.isEmpty) {
+      return [];
+    }
+    RMessage lastMessage = RMessage.fromLocalMap(box.values.last);
+    final snap = await getMessagesCollection(subject)
+        .where('timestamp',
+            isGreaterThan: Timestamp.fromDate(lastMessage.timestamp))
+        .get();
     return snap.docs
         .map((e) => RMessage.fromMap(e.data())..docid = e.id)
         .toList();
   }
 
-  Future<void> putMessage(RSubject subject, RMessage message) async {
-    await getMessagesCollection(subject).add(message.toMap());
+  Future<List<RMessage>> getAllMessages(RSubject subject) async {
+    final snap =
+        await getMessagesCollection(subject).orderBy('timestamp').get();
+    return snap.docs
+        .map((e) => RMessage.fromMap(e.data())..docid = e.id)
+        .toList();
+  }
+
+  Future<String> putMessage(RSubject subject, RMessage message) async {
+    var r = await getMessagesCollection(subject).add(message.toMap());
+    return r.id;
+  }
+
+  Future<RMessage> getMessageFromID(
+      String classid, String subid, String id) async {
+    var r = await getMessagesCollection(
+            RSubject(rclass: RClass(docid: classid))..docid = subid)
+        .doc(id)
+        .get();
+    return RMessage.fromMap(r.data())..docid = r.id;
   }
 }

@@ -21,10 +21,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       //main
       if (event is UserRepoInit) {
         yield UserStateLoading();
-        FireRepo.instance.init();
+        await FireRepo.instance.init();
+        var pass = await _repo.initUserRepo();
+        if (!pass) {
+          yield* throwErrorState('FireLoginFail');
+        }
         bool loggedin = await _repo.isLoggedIn();
         if (loggedin) {
-          final isAdmin = await _repo.isAdminUser();
+          final isAdmin = _repo.isAdminUser();
           if (isAdmin)
             yield UserStateAdmin();
           else
@@ -37,7 +41,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       if (event is UserEventLoginWithUsername) {
         yield UserStateLoading();
         if (await _repo.logInWithUsername(event.username, event.password)) {
-          final isAdmin = await _repo.isAdminUser();
+          final isAdmin = _repo.isAdminUser();
           if (isAdmin)
             yield UserStateAdmin();
           else

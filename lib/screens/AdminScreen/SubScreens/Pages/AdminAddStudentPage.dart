@@ -51,6 +51,7 @@ class _AdminAddStudentPageState extends State<AdminAddStudentPage> {
 
     var ruser = RUser(
       rollno: rollnoController.text,
+      password: passwordController.text,
       name: nameController.text,
       contactnumber: phoneController.text,
       email: emailController.text,
@@ -62,11 +63,7 @@ class _AdminAddStudentPageState extends State<AdminAddStudentPage> {
       classaccess: widget.rclass.docid,
     );
 
-    bool result =
-        await UserRepo.signUpWithUsername(ruser, passwordController.text);
-    if (!result) {
-      Globals.showSnackbar(context, "Student Creation Failed");
-    }
+    await FireRepo.instance.createNewUser(ruser);
 
     Navigator.of(context).pop();
   }

@@ -1,3 +1,4 @@
+import 'package:bkdschool/data/models/UserModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 
@@ -23,6 +24,9 @@ class RMessage extends HiveObject {
   final String by;
   final DateTime timestamp;
   final RMessageType type;
+  String name;
+  String subjectuid;
+  RUserType usertype;
 
   RMessage({
     this.docid,
@@ -30,6 +34,9 @@ class RMessage extends HiveObject {
     this.by,
     this.timestamp,
     this.type,
+    this.name,
+    this.subjectuid,
+    this.usertype,
   });
 
   Map<String, dynamic> toMap() {
@@ -38,6 +45,8 @@ class RMessage extends HiveObject {
       'by': by,
       'timestamp': Timestamp.fromDate(timestamp),
       'type': type.value,
+      'subjectuid': subjectuid,
+      'usertype': usertype.value,
     };
   }
 
@@ -47,6 +56,8 @@ class RMessage extends HiveObject {
       by: map['by'],
       timestamp: (map['timestamp'] as Timestamp).toDate(),
       type: RMessageType.from[map['type']],
+      subjectuid: map['subjectuid'] ?? '',
+      usertype: RUserType.from[map['usertype'] ?? 'student'],
     );
   }
 
@@ -58,6 +69,9 @@ class RMessage extends HiveObject {
       'by': by,
       'timestamp': timestamp,
       'type': type.value,
+      'name': name,
+      'subjectuid': subjectuid,
+      'usertype': usertype.value,
     };
   }
 
@@ -68,6 +82,9 @@ class RMessage extends HiveObject {
       by: map['by'],
       timestamp: map['timestamp'],
       type: RMessageType.from[map['type']],
+      usertype: RUserType.from[map['usertype'] ?? 'student'],
+      name: map['name'] ?? '',
+      subjectuid: map['subjectuid'] ?? '',
     );
   }
 }

@@ -13,6 +13,7 @@ class RUser {
   String uid;
   final String rollno;
   final String username;
+  final String password;
   final String name;
   final RUserType type;
   final String email;
@@ -31,6 +32,7 @@ class RUser {
       this.fathername,
       this.mothername,
       this.username,
+      this.password,
       this.name,
       this.type,
       this.email,
@@ -43,6 +45,7 @@ class RUser {
         'fathername': fathername,
         'mothername': mothername,
         'username': username,
+        'password': password,
         'name': name,
         'type': type.value,
         'email': email,
@@ -59,6 +62,7 @@ class RUser {
         fathername: map['fathername'] ?? "",
         mothername: map['mothername'] ?? "",
         username: map['username'],
+        password: map['password'],
         name: map['name'],
         type: RUserType.from[map['type']],
         email: map['email'] ?? "",

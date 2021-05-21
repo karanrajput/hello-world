@@ -11,6 +11,11 @@ class ChatStateListLoaded extends ChatState {
   ChatStateListLoaded(this.messages);
 }
 
+class ChatStateMessageAdded extends ChatState {
+  final RMessage message;
+  ChatStateMessageAdded(this.message);
+}
+
 class ChatStateError extends ChatState {
   final String message;
 

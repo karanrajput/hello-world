@@ -1,7 +1,10 @@
 import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/data/models/MessageModel.dart';
+import 'package:bkdschool/data/models/UserModel.dart';
+import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/services/services.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class RMessageItemWidget extends StatelessWidget {
   final RMessage message;
@@ -13,9 +16,23 @@ class RMessageItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isOurMessage = message.by == "this";
+    bool isOurMessage = message.by == FireRepo.instance.currentUser.uid;
+
+    bool isOpeningMessage = true;
+    if (prevMessage != null) {
+      if (prevMessage.by == message.by) {
+        isOpeningMessage = false;
+      }
+    }
+    bool isEndingMessage = true;
+    if (nextMessage != null) {
+      if (nextMessage.by == message.by) {
+        isEndingMessage = false;
+      }
+    }
+
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+      padding: const EdgeInsets.fromLTRB(10, 1, 10, 1),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment:
@@ -26,23 +43,25 @@ class RMessageItemWidget extends StatelessWidget {
                 ? CrossAxisAlignment.end
                 : CrossAxisAlignment.start,
             children: [
-              prevMessage != null
+              !isOpeningMessage
                   ? Container()
                   : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: makeText("Harsh",
-                          fontSize: 11, weight: FontWeight.w500),
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: makeText(message.name ?? '',
+                          fontSize: 10, weight: FontWeight.w500),
                     ),
               Container(
                 constraints: BoxConstraints(
                     maxWidth: MediaQuery.of(context).size.width * .8),
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: message.usertype == RUserType.STUDENT
+                        ? Colors.white
+                        : Colors.red,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
+                      topLeft: Radius.circular(isOurMessage ? 10 : 5),
+                      topRight: Radius.circular(isOurMessage ? 5 : 10),
+                      bottomLeft: Radius.circular(isOurMessage ? 10 : 5),
+                      bottomRight: Radius.circular(isOurMessage ? 5 : 10),
                     )),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -50,10 +69,23 @@ class RMessageItemWidget extends StatelessWidget {
                     message.message,
                     alignment: TextAlign.start,
                     fontSize: 14,
+                    color: message.usertype == RUserType.STUDENT
+                        ? Colors.black
+                        : Colors.white,
                     weight: FontWeight.w500,
                   ),
                 ),
               ),
+              !isEndingMessage
+                  ? Container()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: makeText(
+                          DateFormat('hh : mm a').format(message.timestamp),
+                          fontSize: 8,
+                          fontStyle: FontStyle.italic,
+                          weight: FontWeight.w400),
+                    ),
             ],
           ),
         ],

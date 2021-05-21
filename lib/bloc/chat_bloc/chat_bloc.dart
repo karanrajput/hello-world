@@ -21,11 +21,18 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       if (event is ChatEventLoadChat) {
         yield ChatLoading();
         //final messages = await FireRepo.instance.getMessages(event.subject);
-        final List<RMessage> mess = await ChatRepo.instance.getMessages();
+        final List<RMessage> mess =
+            await ChatRepo.instance.getMessages(event.subject);
         yield ChatStateListLoaded(mess);
+      }
+      if (event is ChatEventMessageAdded) {
+        yield ChatStateMessageAdded(event.message);
       }
     } catch (e) {
       yield ChatStateError(e.toString());
+    }
+    if (event is ChatEventInit) {
+      await ChatRepo.instance.init(event.subs);
     }
   }
 }

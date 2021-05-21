@@ -17,12 +17,25 @@ import 'package:flutter/material.dart';
 import 'data/services/services.dart';
 import 'zkaran/zmain.dart';
 
+Future<void> fcmBGHandler(RemoteMessage message) async {
+  print("FCM BG RECIEVED");
+  ChatRepo.instance.recieveFCMMessage(message, true);
+}
+
+fcmFGHandler(RemoteMessage message) {
+  print("FCM FG RECIEVED");
+  ChatRepo.instance.recieveFCMMessage(message, false);
+}
+
 //Main
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await initializeDateFormatting();
   await Hive.initFlutter();
+
+  FirebaseMessaging.onBackgroundMessage(fcmBGHandler);
+  FirebaseMessaging.onMessage.listen(fcmFGHandler);
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -53,7 +66,7 @@ class MainApp extends StatelessWidget {
             accentColor: Globals.colorMain,
             textSelectionTheme:
                 TextSelectionThemeData(cursorColor: Globals.colorMain)),
-        home: Hschool(),
+        home: EntryScreen(),
       ),
     );
   }
