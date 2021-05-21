@@ -43,6 +43,7 @@ class _AdminTeacherScreenState extends State<AdminTeacherScreen> {
     super.initState();
     FireRepo.instance.getAllUsersStream(RUserType.TEACHER).listen((event) {
       rusers = event;
+      displayList.clear();
       displayList.addAll(rusers);
       setState(() {});
     });
@@ -53,6 +54,7 @@ class _AdminTeacherScreenState extends State<AdminTeacherScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: makeCardContainer(
+        alpha: 180,
         padding: 0,
         child: Column(
           children: [

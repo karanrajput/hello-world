@@ -9,10 +9,21 @@ enum RMessageType {
   VIDEO,
   YOUTUBE,
   VOICE,
+  TEST,
+  RESULT,
 }
 
 extension RMessageTypeExtension on RMessageType {
-  static const values = ["", "text", "image", "video", "youtube", "voice"];
+  static const values = [
+    "",
+    "text",
+    "image",
+    "video",
+    "youtube",
+    "voice",
+    "test",
+    "result"
+  ];
   String get value => values[this.index];
   operator [](String key) => RMessageType.values
       .firstWhere((e) => e.toString() == 'RMessageType.' + key.toUpperCase());

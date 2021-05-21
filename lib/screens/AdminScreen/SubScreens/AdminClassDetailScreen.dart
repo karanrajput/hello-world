@@ -5,6 +5,7 @@ import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/services/globals.dart';
 import 'package:bkdschool/screens/AdminScreen/SubScreens/AdminStudentsScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'Pages/AdminAddSubject.dart';
 
 class AdminClassDetailScreen extends StatelessWidget {
@@ -80,11 +81,13 @@ class AdminClassDetailScreen extends StatelessWidget {
         itemCount: subjects.length + 1,
         itemBuilder: (context, i) {
           return (i != subjects.length)
-              ? SizedBox(
-                  width: 150,
+              ? Container(
+                  constraints: BoxConstraints(minWidth: 150),
                   child: RSubjectItemWidget(
                     subject: subjects[i],
-                    onPressed: () {},
+                    onPressed: () {
+                      // Globals.navigateScreen(null);
+                    },
                   ),
                 )
               : button;

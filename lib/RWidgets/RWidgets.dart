@@ -199,6 +199,7 @@ Widget makeCardContainer({
   double padding = 10,
   bool clickable = false,
   VoidCallback onPressed,
+  VoidCallback onLongPressed,
 }) {
   var maincontainer = Container(
     decoration: BoxDecoration(
@@ -219,6 +220,7 @@ Widget makeCardContainer({
           splashColor: Globals.colorMain,
           borderRadius: BorderRadius.circular(radius),
           onTap: onPressed,
+          onLongPress: onLongPressed,
           child: maincontainer)
       : maincontainer;
 }

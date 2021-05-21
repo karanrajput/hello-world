@@ -1,8 +1,10 @@
 import 'package:bkdschool/data/models/ClassModel.dart';
 import 'package:bkdschool/data/models/MessageModel.dart';
+import 'package:bkdschool/data/models/NotificationModel.dart';
 import 'package:bkdschool/data/models/SubjectModel.dart';
 import 'package:bkdschool/data/models/UserModel.dart';
 import 'package:bkdschool/data/repos/ChatRepo.dart';
+import 'package:bkdschool/data/models/questionmodal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
@@ -21,11 +23,15 @@ class FireRepo {
 
   static CollectionReference usersCollection;
   static CollectionReference classesCollection;
+  static CollectionReference notificationCollection;
+  static CollectionReference examQuestionCollection;
 
   Future<void> init() async {
     saveBox = await Hive.openBox('global');
     usersCollection = db.collection('users');
     classesCollection = db.collection('classes');
+    notificationCollection = db.collection('notification');
+    examQuestionCollection = db.collection('examquestion');
   }
 
   static CollectionReference getSubjectsCollection(RClass rclass) =>
@@ -62,6 +68,14 @@ class FireRepo {
     }
   }
 
+  Future<void> deleteUser(RUser user) async {
+    await usersCollection.doc(user.uid).delete();
+  }
+
+  Future<void> updateUser(RUser user) async {
+    await usersCollection.doc(user.uid).update(user.toMap());
+  }
+
   Future<RUser> getRUserFromUID(String uid) async {
     final doc = await usersCollection.doc(uid).get();
     if (doc.exists) {
@@ -92,6 +106,50 @@ class FireRepo {
         .get();
     return r.size >= 1 ? true : false;
   }
+
+//notification
+
+  createNewNotification(RNotification notification) {
+    notificationCollection.add(notification.toMap());
+  }
+
+  updateNotification(RNotification notification) {
+    notificationCollection.doc(notification.docid).update(notification.toMap());
+  }
+
+  deleteNotification(RNotification notification) {
+    notificationCollection.doc(notification.docid).delete();
+  }
+
+  Stream<List<RNotification>> getNotificationStream() async* {
+    yield* notificationCollection.snapshots().map((event) => event.docs
+        .map((e) => RNotification.fromMap(e.data())..docid = e.id)
+        .toList());
+  }
+
+//notification
+
+//Question
+
+  createNewQuestion(RExamQsn examquestion) {
+    examQuestionCollection.add(examquestion.toMap());
+  }
+
+  updateQuestion(RExamQsn examquestion) {
+    examQuestionCollection.doc(examquestion.docid).update(examquestion.toMap());
+  }
+
+  deleteQuestion(RExamQsn examquestion) {
+    examQuestionCollection.doc(examquestion.docid).delete();
+  }
+
+  Stream<List<RExamQsn>> getQuestionStream() async* {
+    yield* examQuestionCollection.snapshots().map((event) => event.docs
+        .map((e) => RExamQsn.fromMap(e.data())..docid = e.id)
+        .toList());
+  }
+
+//Question
 
   //
   // Class
