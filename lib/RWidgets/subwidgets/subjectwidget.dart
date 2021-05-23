@@ -7,9 +7,14 @@ class RSubjectItemWidget extends StatelessWidget {
   final RSubject subject;
   final bool selected;
   final VoidCallback onPressed;
+  final VoidCallback onLongPressed;
 
   const RSubjectItemWidget(
-      {Key key, this.subject, this.onPressed, this.selected = false})
+      {Key key,
+      this.subject,
+      this.onPressed,
+      this.selected = false,
+      this.onLongPressed})
       : super(key: key);
 
   @override
@@ -25,6 +30,7 @@ class RSubjectItemWidget extends StatelessWidget {
         alpha: selected ? 200 : 50,
         clickable: true,
         onPressed: onPressed,
+        onLongPressed: onLongPressed,
         child: makeCenterContainer(makeText(subject.name, fontSize: 20)),
       ),
     );
