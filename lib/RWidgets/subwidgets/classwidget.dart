@@ -1,6 +1,5 @@
 import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/data/models/ClassModel.dart';
-import 'package:bkdschool/data/services/globals.dart';
 import 'package:flutter/material.dart';
 
 class RClassItemWidget extends StatelessWidget {
@@ -17,7 +16,17 @@ class RClassItemWidget extends StatelessWidget {
       child: makeCardContainer(
         clickable: true,
         onPressed: onPressed,
-        child: makeCenterContainer(makeText(rclass.name)),
+        child: makeCenterContainer(Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 30,
+            ),
+            Expanded(
+                child: makeText(rclass.name,
+                    fontSize: 25, alignment: TextAlign.left)),
+          ],
+        )),
       ),
     );
   }

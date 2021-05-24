@@ -13,7 +13,7 @@ class ClassesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<ClassBloc>(context).add(ClassEventLoadClassList());
     return RSimpleScaffold(
-      title: "BKD School",
+      title: "",
       child: Container(child: BlocBuilder<ClassBloc, ClassState>(
         builder: (context, state) {
           if (state is ClassStateClassListLoaded) {
@@ -22,7 +22,7 @@ class ClassesPage extends StatelessWidget {
           }
           return classes.isNotEmpty
               ? _makeClassesList(context, classes)
-              : makeCenterContainer(makeLoadingIndicator(""));
+              : makeCenterContainer(makeLoadingIndicator("Loading..."));
         },
       )),
     );
@@ -35,8 +35,10 @@ class ClassesPage extends StatelessWidget {
           return RClassItemWidget(
             rclass: classes[index],
             onPressed: () {
-              Globals.navigateScreen(SubjectsPage(
-                rclass: classes[index],
+              Globals.navigateScreen(RSimpleScaffold(
+                child: SubjectsPage(
+                  rclass: classes[index],
+                ),
               ));
             },
           );

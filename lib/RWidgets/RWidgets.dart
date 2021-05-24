@@ -68,6 +68,7 @@ class RSimpleScaffold extends StatelessWidget {
           iconTheme: IconThemeData(color: color),
           title: Text(
             title,
+            textAlign: TextAlign.left,
             style: TextStyle(color: color, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,

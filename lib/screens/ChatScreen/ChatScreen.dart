@@ -68,6 +68,22 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return RSimpleScaffold(
       title: widget.subject.name,
+      actions: [
+        Row(
+          children: [
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.video_call_rounded))),
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.request_page_rounded))),
+          ],
+        )
+      ],
       child: GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);

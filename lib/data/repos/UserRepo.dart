@@ -51,6 +51,12 @@ class UserRepo {
     if (ruser.type == RUserType.STUDENT) {
       ChatRepo.instance.subscribe(classID: ruser.classaccess);
       await ChatRepo.instance.clearAndLoadAllMessages(ruser.classaccess);
+    } else if (ruser.type == RUserType.TEACHER) {
+      var r = await FireRepo.instance.getClassesList();
+      for (var rclass in r) {
+        ChatRepo.instance.subscribe(classID: rclass.docid);
+        await ChatRepo.instance.clearAndLoadAllMessages(rclass.docid);
+      }
     }
   }
 

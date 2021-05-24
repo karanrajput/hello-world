@@ -48,7 +48,7 @@ class RMessageItemWidget extends StatelessWidget {
                   : Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 3),
                       child: makeText(message.name ?? '',
-                          fontSize: 10, weight: FontWeight.w500),
+                          fontSize: 12, weight: FontWeight.w500),
                     ),
               Container(
                 constraints: BoxConstraints(
@@ -82,7 +82,7 @@ class RMessageItemWidget extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: makeText(
                           DateFormat('hh : mm a').format(message.timestamp),
-                          fontSize: 8,
+                          fontSize: 10,
                           fontStyle: FontStyle.italic,
                           weight: FontWeight.w400),
                     ),
