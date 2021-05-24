@@ -214,7 +214,7 @@ class FireRepo {
     RMessage lastMessage = RMessage.fromLocalMap(box.values.last);
     final snap = await getMessagesCollection(subject)
         .where('timestamp',
-            isGreaterThan: Timestamp.fromDate(lastMessage.timestamp))
+            isGreaterThan: lastMessage.timestamp.millisecondsSinceEpoch)
         .get();
     return snap.docs
         .map((e) => RMessage.fromMap(e.data())..docid = e.id)

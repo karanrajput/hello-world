@@ -54,7 +54,7 @@ class RMessage extends HiveObject {
     return {
       'message': message,
       'by': by,
-      'timestamp': Timestamp.fromDate(timestamp),
+      'timestamp': timestamp.millisecondsSinceEpoch,
       'type': type.value,
       'subjectuid': subjectuid,
       'usertype': usertype.value,
@@ -65,7 +65,7 @@ class RMessage extends HiveObject {
     return RMessage(
       message: map['message'],
       by: map['by'],
-      timestamp: (map['timestamp'] as Timestamp).toDate(),
+      timestamp: DateTime.fromMillisecondsSinceEpoch(map['timestamp']),
       type: RMessageType.from[map['type']],
       subjectuid: map['subjectuid'] ?? '',
       usertype: RUserType.from[map['usertype'] ?? 'student'],
