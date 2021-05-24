@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/RWidgets/subwidgets/messagewidget.dart';
 import 'package:bkdschool/bloc/chat_bloc/chat_bloc.dart';
@@ -7,8 +9,14 @@ import 'package:bkdschool/data/models/UserModel.dart';
 import 'package:bkdschool/data/repos/ChatRepo.dart';
 import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/services/globals.dart';
+import 'package:bkdschool/screens/AdminScreen/SubScreens/Exam/Adminexampage.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:jitsi_meet/feature_flag/feature_flag.dart';
+import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:open_file/open_file.dart';
 
 class ChatScreen extends StatefulWidget {
   final RSubject subject;
@@ -54,6 +62,22 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {});
   }
 
+//jitsi meet
+  _joinMeeting() async {
+    try {
+      FeatureFlag featureFlag = FeatureFlag();
+      featureFlag.welcomePageEnabled = false;
+      featureFlag.resolution = FeatureFlagVideoResolution
+          .MD_RESOLUTION; // Limit video resolution to 360p
+
+      var options = JitsiMeetingOptions(room: 'this_dkdsd');
+
+      await JitsiMeet.joinMeeting(options);
+    } catch (error) {
+      debugPrint("error: $error");
+    }
+  }
+
   RUser currentUser;
   @override
   void initState() {
@@ -74,12 +98,14 @@ class _ChatScreenState extends State<ChatScreen> {
             Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: IconButton(
-                    onPressed: () {},
+                    onPressed: _joinMeeting,
                     icon: const Icon(Icons.video_call_rounded))),
             Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Globals.navigateScreen(AdminExamPage());
+                    },
                     icon: const Icon(Icons.request_page_rounded))),
           ],
         )
@@ -105,7 +131,17 @@ class _ChatScreenState extends State<ChatScreen> {
                       icon: Icons.file_present,
                       color: Colors.transparent,
                       iconColor: Colors.black,
-                      onPressed: () {},
+                      onPressed: () async {
+                        FilePickerResult result = await FilePicker.platform
+                            .pickFiles(allowMultiple: true);
+
+                        if (result != null) {
+                          List<File> files =
+                              result.paths.map((path) => File(path)).toList();
+                        } else {
+                          // User canceled the picker
+                        }
+                      },
                       iconSize: 20,
                     ),
                     Expanded(

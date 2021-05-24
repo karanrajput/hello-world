@@ -36,6 +36,7 @@ class ClassesPage extends StatelessWidget {
             rclass: classes[index],
             onPressed: () {
               Globals.navigateScreen(RSimpleScaffold(
+                title: classes[index].name,
                 child: SubjectsPage(
                   rclass: classes[index],
                 ),

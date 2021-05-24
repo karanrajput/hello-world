@@ -129,6 +129,29 @@ class FireRepo {
 
 //notification
 
+//question
+
+  createNewExam(List<RExamQsn> questionList) {
+    examQuestionCollection
+        .add({"questions": questionList.map((e) => e.toMap()).toList()});
+  }
+
+  // updateNotification(RNotification notification) {
+  //   notificationCollection.doc(notification.docid).update(notification.toMap());
+  // }
+
+  // deleteNotification(RNotification notification) {
+  //   notificationCollection.doc(notification.docid).delete();
+  // }
+
+  // Stream<List<RNotification>> getNotificationStream() async* {
+  //   yield* notificationCollection.snapshots().map((event) => event.docs
+  //       .map((e) => RNotification.fromMap(e.data())..docid = e.id)
+  //       .toList());
+  // }
+
+//question
+
 //Question
 
   createNewQuestion(RExamQsn examquestion) {

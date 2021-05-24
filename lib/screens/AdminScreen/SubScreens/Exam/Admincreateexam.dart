@@ -22,6 +22,13 @@ class AdminCreateExamPage extends StatefulWidget {
 class _AdminCreateExamPageState extends State<AdminCreateExamPage> {
   Box box;
   List<RExamQsn> questionlist = [];
+
+  _createExamPressed() async {
+    FireRepo.instance.createNewExam(questionlist);
+
+    Navigator.of(context).pop();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -76,7 +83,7 @@ class _AdminCreateExamPageState extends State<AdminCreateExamPage> {
               ),
               RButton(
                 text: 'Create Exam',
-                onPressed: () {},
+                onPressed: _createExamPressed,
               ),
             ],
           ),
