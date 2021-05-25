@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/RWidgets/subwidgets/messagewidget.dart';
 import 'package:bkdschool/bloc/chat_bloc/chat_bloc.dart';
@@ -7,8 +10,16 @@ import 'package:bkdschool/data/models/UserModel.dart';
 import 'package:bkdschool/data/repos/ChatRepo.dart';
 import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/services/globals.dart';
+import 'package:bkdschool/screens/AdminScreen/SubScreens/Exam/Adminexampage.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:jitsi_meet/feature_flag/feature_flag.dart';
+import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:open_file/open_file.dart';
+import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
 class ChatScreen extends StatefulWidget {
   final RSubject subject;
@@ -54,7 +65,45 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {});
   }
 
+//jitsi meet
+  _joinMeeting() async {
+    try {
+      FeatureFlag featureFlag = FeatureFlag();
+      featureFlag.welcomePageEnabled = false;
+      featureFlag.resolution = FeatureFlagVideoResolution
+          .MD_RESOLUTION; // Limit video resolution to 360p
+
+      String roomname =
+          'room_class_' + widget.subject.rclass.docid + widget.subject.docid;
+
+      var options = JitsiMeetingOptions(room: roomname);
+
+      var r = RMessage(
+        message: roomname,
+        type: RMessageType.LIVE,
+        by: currentUser.uid,
+        timestamp: DateTime.now(),
+        name: currentUser.name,
+        subjectuid: widget.subject.docid,
+        usertype: FireRepo.instance.currentUser.type,
+      );
+      waitingMessages.add(r);
+
+      ChatRepo.instance.sendMessageToSubject(widget.subject, r);
+
+      scrollController.jumpTo(scrollController.position.maxScrollExtent);
+
+      setState(() {});
+
+      await JitsiMeet.joinMeeting(options);
+    } catch (error) {
+      debugPrint("error: $error");
+    }
+  }
+
   RUser currentUser;
+  bool fileUploading = false;
+
   @override
   void initState() {
     super.initState();
@@ -74,12 +123,14 @@ class _ChatScreenState extends State<ChatScreen> {
             Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: IconButton(
-                    onPressed: () {},
+                    onPressed: _joinMeeting,
                     icon: const Icon(Icons.video_call_rounded))),
             Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Globals.navigateScreen(AdminExamPage());
+                    },
                     icon: const Icon(Icons.request_page_rounded))),
           ],
         )
@@ -101,13 +152,68 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Row(
                   children: [
                     makeSpace(10, true),
-                    RIconButton(
-                      icon: Icons.file_present,
-                      color: Colors.transparent,
-                      iconColor: Colors.black,
-                      onPressed: () {},
-                      iconSize: 20,
-                    ),
+                    fileUploading
+                        ? CircularProgressIndicator()
+                        : RIconButton(
+                            icon: Icons.file_present,
+                            color: Colors.transparent,
+                            iconColor: Colors.black,
+                            onPressed: fileUploading
+                                ? null
+                                : () async {
+                                    FilePickerResult result = await FilePicker
+                                        .platform
+                                        .pickFiles(allowMultiple: true);
+
+                                    if (result != null) {
+                                      for (var file in result.files) {
+                                        setState(() {
+                                          fileUploading = true;
+                                        });
+                                        var uid = Uuid().v1();
+                                        var r = await http.post(
+                                            Uri.http('scaptor.com',
+                                                'bkdschool/bkdup.php'),
+                                            body: {
+                                              "image": base64Encode(
+                                                  File(file.path)
+                                                      .readAsBytesSync()),
+                                              "name": uid + file.name,
+                                            });
+                                        print(r.statusCode);
+                                        if (r.statusCode == 200) {
+                                          var r = RMessage(
+                                            message: uid + file.name,
+                                            type: RMessageType.IMAGE,
+                                            by: currentUser.uid,
+                                            timestamp: DateTime.now(),
+                                            name: currentUser.name,
+                                            subjectuid: widget.subject.docid,
+                                            usertype: FireRepo
+                                                .instance.currentUser.type,
+                                          );
+                                          waitingMessages.add(r);
+
+                                          ChatRepo.instance
+                                              .sendMessageToSubject(
+                                                  widget.subject, r);
+
+                                          scrollController.jumpTo(
+                                              scrollController
+                                                  .position.maxScrollExtent);
+
+                                          setState(() {});
+                                        } else {}
+                                        setState(() {
+                                          fileUploading = false;
+                                        });
+                                      }
+                                    } else {
+                                      // User canceled the picker
+                                    }
+                                  },
+                            iconSize: 20,
+                          ),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(10),

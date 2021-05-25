@@ -5,6 +5,7 @@ import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jitsi_meet/jitsi_meet.dart';
 
 class RMessageItemWidget extends StatelessWidget {
   final RMessage message;
@@ -65,15 +66,7 @@ class RMessageItemWidget extends StatelessWidget {
                     )),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: makeText(
-                    message.message,
-                    alignment: TextAlign.start,
-                    fontSize: 14,
-                    color: message.usertype == RUserType.STUDENT
-                        ? Colors.black
-                        : Colors.white,
-                    weight: FontWeight.w500,
-                  ),
+                  child: makeMes(),
                 ),
               ),
               !isEndingMessage
@@ -91,5 +84,49 @@ class RMessageItemWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget makeMes() {
+    if (message.type == RMessageType.TEXT) {
+      return makeText(
+        message.message,
+        alignment: TextAlign.start,
+        fontSize: 14,
+        color:
+            message.usertype == RUserType.STUDENT ? Colors.black : Colors.white,
+        weight: FontWeight.w500,
+      );
+    } else if (message.type == RMessageType.LIVE) {
+      return RButton(
+        text: "Join Meeting",
+        onPressed: () async {
+          try {
+            var options = JitsiMeetingOptions(room: message.message);
+
+            await JitsiMeet.joinMeeting(options);
+          } catch (error) {
+            debugPrint("error: $error");
+          }
+        },
+      );
+    } else if (message.type == RMessageType.IMAGE) {
+      return Row(
+        children: [
+          makeText(
+            "File",
+            alignment: TextAlign.start,
+            fontSize: 14,
+            color: message.usertype == RUserType.STUDENT
+                ? Colors.black
+                : Colors.white,
+            weight: FontWeight.w500,
+          ),
+          RButton(
+            text: "Download",
+            onPressed: () {},
+          )
+        ],
+      );
+    }
   }
 }

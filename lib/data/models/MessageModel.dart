@@ -11,6 +11,7 @@ enum RMessageType {
   VOICE,
   TEST,
   RESULT,
+  LIVE
 }
 
 extension RMessageTypeExtension on RMessageType {
@@ -22,7 +23,8 @@ extension RMessageTypeExtension on RMessageType {
     "youtube",
     "voice",
     "test",
-    "result"
+    "result",
+    "live"
   ];
   String get value => values[this.index];
   operator [](String key) => RMessageType.values
