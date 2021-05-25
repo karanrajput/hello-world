@@ -92,147 +92,117 @@ class _AdminAddQuestionState extends State<AdminAddQuestion> {
                 padding: const EdgeInsets.only(
                     left: 10, right: 10, top: 0, bottom: 10),
                 child: makeScroll(
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: questionController,
-                        minLines: 1,
-                        maxLines: 5,
-                        keyboardType: TextInputType.multiline,
-                        style: TextStyle(
-                          fontSize: 25,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        RTextField(
+                            label: "Question",
+                            controller: questionController,
+                            keyboardtype: TextInputType.multiline),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: RTextField(
+                                    label: "Option 1",
+                                    controller: op1Controller,
+                                    keyboardtype: TextInputType.multiline),
+                              ),
+                              Radio(
+                                onChanged: (value) {
+                                  setState(() {
+                                    op = value;
+                                  });
+                                },
+                                groupValue: op,
+                                value: options.op1,
+                              ),
+                            ],
+                          ),
                         ),
-                        decoration: InputDecoration(
-                          hintText: "Enter Your Question",
-                          labelText: "Question",
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: RTextField(
+                                    label: "Option 2",
+                                    controller: op2Controller,
+                                    keyboardtype: TextInputType.multiline),
+                              ),
+                              Radio(
+                                onChanged: (value) {
+                                  setState(() {
+                                    op = value;
+                                  });
+                                },
+                                groupValue: op,
+                                value: options.op2,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: op1Controller,
-                              minLines: 1,
-                              maxLines: 5,
-                              keyboardType: TextInputType.multiline,
-                              style: TextStyle(
-                                fontSize: 25,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: RTextField(
+                                    label: "Option 3",
+                                    controller: op3Controller,
+                                    keyboardtype: TextInputType.multiline),
                               ),
-                              decoration: InputDecoration(
-                                hintText: "Enter Option 1",
-                                labelText: "Option 1",
+                              Radio(
+                                onChanged: (value) {
+                                  setState(() {
+                                    op = value;
+                                  });
+                                },
+                                groupValue: op,
+                                value: options.op3,
                               ),
-                            ),
+                            ],
                           ),
-                          Radio(
-                            onChanged: (value) {
-                              setState(() {
-                                op = value;
-                              });
-                            },
-                            groupValue: op,
-                            value: options.op1,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: op2Controller,
-                              minLines: 1,
-                              maxLines: 5,
-                              keyboardType: TextInputType.multiline,
-                              style: TextStyle(
-                                fontSize: 25,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: RTextField(
+                                    label: "Option 4",
+                                    controller: op4Controller,
+                                    keyboardtype: TextInputType.multiline),
                               ),
-                              decoration: InputDecoration(
-                                hintText: "Enter Option 2",
-                                labelText: "Option 2",
+                              Radio(
+                                onChanged: (value) {
+                                  setState(() {
+                                    op = value;
+                                  });
+                                },
+                                groupValue: op,
+                                value: options.op4,
                               ),
-                            ),
+                            ],
                           ),
-                          Radio(
-                            onChanged: (value) {
-                              setState(() {
-                                op = value;
-                              });
-                            },
-                            groupValue: op,
-                            value: options.op2,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: op3Controller,
-                              minLines: 1,
-                              maxLines: 5,
-                              keyboardType: TextInputType.multiline,
-                              style: TextStyle(
-                                fontSize: 25,
-                              ),
-                              decoration: InputDecoration(
-                                hintText: "Enter Option 3",
-                                labelText: "Option 3",
-                              ),
-                            ),
-                          ),
-                          Radio(
-                            onChanged: (value) {
-                              setState(() {
-                                op = value;
-                              });
-                            },
-                            groupValue: op,
-                            value: options.op3,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: op4Controller,
-                              minLines: 1,
-                              maxLines: 5,
-                              keyboardType: TextInputType.multiline,
-                              style: TextStyle(
-                                fontSize: 25,
-                              ),
-                              decoration: InputDecoration(
-                                hintText: "Enter Option 4",
-                                labelText: "Option 4",
-                              ),
-                            ),
-                          ),
-                          Radio(
-                            onChanged: (value) {
-                              setState(() {
-                                op = value;
-                              });
-                            },
-                            groupValue: op,
-                            value: options.op4,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: RButton(
-                            text: "Submit",
-                            color: Colors.blueAccent,
-                            onPressed: () => _addQsnClick(context)),
-                      ),
-                      SizedBox(
-                        height: 80,
-                      )
-                    ],
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RButton(
+                              text: "Submit",
+                              color: Colors.blueAccent,
+                              onPressed: () => _addQsnClick(context)),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

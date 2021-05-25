@@ -1,7 +1,9 @@
 import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/bloc/class_bloc/class_bloc.dart';
+import 'package:bkdschool/bloc/user_bloc/user_bloc.dart';
 import 'package:bkdschool/data/models/ClassModel.dart';
 import 'package:bkdschool/data/services/globals.dart';
+import 'package:bkdschool/screens/EntryScreen/EntryScreen.dart';
 import 'package:bkdschool/screens/HomeScreen/pages/Page_Subjects.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +16,15 @@ class ClassesPage extends StatelessWidget {
     BlocProvider.of<ClassBloc>(context).add(ClassEventLoadClassList());
     return RSimpleScaffold(
       title: "",
+      actions: [
+        TextButton(
+            onPressed: () {
+              BlocProvider.of<UserBloc>(context).add(UserEventLogOut());
+              Navigator.pop(context);
+              Globals.navigateScreen(EntryScreen());
+            },
+            child: Text("Log Out"))
+      ],
       child: Container(child: BlocBuilder<ClassBloc, ClassState>(
         builder: (context, state) {
           if (state is ClassStateClassListLoaded) {
@@ -35,11 +46,8 @@ class ClassesPage extends StatelessWidget {
           return RClassItemWidget(
             rclass: classes[index],
             onPressed: () {
-              Globals.navigateScreen(RSimpleScaffold(
-                title: classes[index].name,
-                child: SubjectsPage(
-                  rclass: classes[index],
-                ),
+              Globals.navigateScreen(SubjectsPage(
+                rclass: classes[index],
               ));
             },
           );

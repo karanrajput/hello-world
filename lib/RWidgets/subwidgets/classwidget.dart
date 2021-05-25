@@ -16,16 +16,10 @@ class RClassItemWidget extends StatelessWidget {
       child: makeCardContainer(
         clickable: true,
         onPressed: onPressed,
-        child: makeCenterContainer(Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 30,
-            ),
-            Expanded(
-                child: makeText(rclass.name,
-                    fontSize: 25, alignment: TextAlign.left)),
-          ],
+        child: makeCenterContainer(Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:
+              makeText(rclass.name, fontSize: 25, alignment: TextAlign.center),
         )),
       ),
     );

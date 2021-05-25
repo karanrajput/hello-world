@@ -1,5 +1,6 @@
 import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/bloc/class_bloc/class_bloc.dart';
+import 'package:bkdschool/bloc/user_bloc/user_bloc.dart';
 import 'package:bkdschool/data/models/ClassModel.dart';
 import 'package:bkdschool/data/models/SubjectModel.dart';
 import 'package:bkdschool/data/repos/ChatRepo.dart';
@@ -7,6 +8,7 @@ import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/services/globals.dart';
 import 'package:bkdschool/screens/ChatScreen/ChatScreen.dart';
 import 'package:bkdschool/screens/ChatScreen/chatscreen%20copy.dart';
+import 'package:bkdschool/screens/EntryScreen/EntryScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,6 +34,15 @@ class _SubjectsPageState extends State<SubjectsPage> {
   Widget build(BuildContext context) {
     return RSimpleScaffold(
       title: "Subjects",
+      actions: [
+        TextButton(
+            onPressed: () {
+              BlocProvider.of<UserBloc>(context).add(UserEventLogOut());
+              Navigator.pop(context);
+              Globals.navigateScreen(EntryScreen());
+            },
+            child: Text("Log Out"))
+      ],
       child: Container(
           child: _makeSubjectsList(context, Globals.instance.subjects)),
     );
