@@ -208,17 +208,18 @@ class FireRepo {
 
   Future<List<RMessage>> getMessages(RSubject subject) async {
     var box = await ChatRepo.instance.getSubjectBox(subject.docid);
-    if (box.isEmpty) {
-      return [];
+    if (box.isNotEmpty) {
+      RMessage lastMessage = RMessage.fromLocalMap(box.values.last);
+      final snap = await getMessagesCollection(subject)
+          .where('timestamp',
+              isGreaterThan: lastMessage.timestamp.millisecondsSinceEpoch)
+          .get();
+      return snap.docs
+          .map((e) => RMessage.fromMap(e.data())..docid = e.id)
+          .toList();
+    } else {
+      return getAllMessages(subject);
     }
-    RMessage lastMessage = RMessage.fromLocalMap(box.values.last);
-    final snap = await getMessagesCollection(subject)
-        .where('timestamp',
-            isGreaterThan: lastMessage.timestamp.millisecondsSinceEpoch)
-        .get();
-    return snap.docs
-        .map((e) => RMessage.fromMap(e.data())..docid = e.id)
-        .toList();
   }
 
   Future<List<RMessage>> getAllMessages(RSubject subject) async {

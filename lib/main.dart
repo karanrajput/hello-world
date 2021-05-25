@@ -8,17 +8,59 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/material.dart';
+import 'data/models/MessageModel.dart';
+import 'data/models/SubjectModel.dart';
+import 'data/models/UserModel.dart';
+import 'data/repos/FireRepo.dart';
+import 'data/repos/NotifRepo.dart';
 import 'data/services/services.dart';
 import 'zkaran/zmain.dart';
 
 Future<void> fcmBGHandler(RemoteMessage message) async {
   print("FCM BG RECIEVED");
-  ChatRepo.instance.recieveFCMMessage(message, true);
+
+  String fcmtype = message.data['type'];
+  if (fcmtype == 'chat_message') {
+    String classid = message.data['classid'];
+    String subjectid = message.data['subjectid'];
+    String messageid = message.data['messageid'];
+
+    await Firebase.initializeApp();
+    await initializeDateFormatting();
+    await Hive.initFlutter();
+    var messagesBox = await Hive.openBox('messages-' + subjectid);
+
+    await FireRepo.instance.init();
+    RSubject subject =
+        await FireRepo.instance.getSubjectFromID(classid, subjectid);
+    RMessage mes =
+        await FireRepo.instance.getMessageFromID(classid, subjectid, messageid);
+    RUser ruser = await FireRepo.instance.getRUserFromUID(mes.by);
+    mes.name = ruser.name;
+    messagesBox.add(mes.toLocalMap());
+
+    //Notif
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin.show(
+        mes.hashCode,
+        subject.name,
+        ruser.name + " : " + mes.message,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            NotifRepo.channel.id,
+            NotifRepo.channel.name,
+            NotifRepo.channel.description,
+            icon: 'launch_background',
+          ),
+        ));
+  }
 }
 
 fcmFGHandler(RemoteMessage message) {

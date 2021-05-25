@@ -1,4 +1,6 @@
 import 'package:bkdschool/RWidgets/RWidgets.dart';
+import 'package:bkdschool/data/models/ClassModel.dart';
+import 'package:bkdschool/data/models/SubjectModel.dart';
 import 'package:bkdschool/data/services/services.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +25,20 @@ class Globals {
   static const Color colorSecondary = Colors.pink;
 
   ///////////////////
+  ///
+  ///
+  ///
+
+  List<RClass> classes;
+  List<RSubject> subjects;
+  RSubject currentSubject;
+  RClass currentClass;
+
+  ///
+  ///
+  ///
+  ///
+  ///
 
   //Navigation
   static final navigation = GlobalKey<NavigatorState>();

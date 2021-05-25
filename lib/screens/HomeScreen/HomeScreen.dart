@@ -18,52 +18,48 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  RClass rclass;
-  bool isTeacher = false;
   @override
   void initState() {
     super.initState();
-    FireRepo.instance.getClassFromID(FireRepo.instance.currentUser.classaccess)
-        // .getClassFromID('1ezpcfj9iT2WeXdO6S7p')
-        .then((value) async {
-      await ChatRepo.instance
-          .init(await FireRepo.instance.getSubjectsOfClass(value));
+    // FireRepo.instance.getClassFromID(FireRepo.instance.currentUser.classaccess)
+    //     // .getClassFromID('1ezpcfj9iT2WeXdO6S7p')
+    //     .then((value) async {
+    //   await ChatRepo.instance
+    //       .init(await FireRepo.instance.getSubjectsOfClass(value));
 
-      setState(() {
-        rclass = value;
-      });
-    });
+    //   setState(() {
+    //     rclass = value;
+    //   });
+    // });
+    // if (FireRepo.instance.currentUser.type == RUserType.TEACHER) {
+    //   isTeacher = true;
+    // }
+    initHome();
+  }
+
+  initHome() async {
     if (FireRepo.instance.currentUser.type == RUserType.TEACHER) {
-      isTeacher = true;
+      Globals.instance.classes = await FireRepo.instance.getClassesList();
+      Globals.navigateScreen(ClassesPage(), closePrevious: true);
+    } else {
+      var rclass = await FireRepo.instance
+          .getClassFromID(FireRepo.instance.currentUser.classaccess);
+      Globals.instance.currentClass = rclass;
+      Globals.instance.subjects =
+          await FireRepo.instance.getSubjectsOfClass(rclass);
+      Globals.navigateScreen(
+          SubjectsPage(
+            rclass: rclass,
+          ),
+          closePrevious: true);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return RSimpleScaffold(
-        title: "Class List",
-        actions: [
-          Container(
-            alignment: Alignment.center,
-            child: RButton(
-              text: "Logout",
-              color: Colors.transparent,
-              textColor: Colors.brown,
-              borderRadius: 50,
-              onPressed: () {
-                BlocProvider.of<UserBloc>(context).add(UserEventLogOut());
-                Navigator.pop(context);
-                Globals.navigateScreen(EntryScreen());
-              },
-            ),
-          ),
-        ],
-        child: isTeacher
-            ? ClassesPage()
-            : rclass != null
-                ? SubjectsPage(
-                    rclass: rclass,
-                  )
-                : makeLoadingIndicator("Loading...."));
+      title: "",
+      child: makeCenterContainer(makeLoadingIndicator("")),
+    );
   }
 }
