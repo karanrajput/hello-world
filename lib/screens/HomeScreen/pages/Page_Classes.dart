@@ -2,6 +2,7 @@ import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/bloc/class_bloc/class_bloc.dart';
 import 'package:bkdschool/bloc/user_bloc/user_bloc.dart';
 import 'package:bkdschool/data/models/ClassModel.dart';
+import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/services/globals.dart';
 import 'package:bkdschool/screens/EntryScreen/EntryScreen.dart';
 import 'package:bkdschool/screens/HomeScreen/pages/Page_Subjects.dart';
@@ -32,20 +33,23 @@ class ClassesPage extends StatelessWidget {
             classes.addAll(state.clases);
           }
           return classes.isNotEmpty
-              ? _makeClassesList(context, classes)
+              ? _makeClassesList(context)
               : makeCenterContainer(makeLoadingIndicator("Loading..."));
         },
       )),
     );
   }
 
-  Widget _makeClassesList(BuildContext context, List<RClass> classes) {
+  Widget _makeClassesList(BuildContext context) {
     return ListView.builder(
         itemCount: classes.length,
-        itemBuilder: (contextn, index) {
+        itemBuilder: (context, index) {
           return RClassItemWidget(
             rclass: classes[index],
-            onPressed: () {
+            onPressed: () async {
+              Globals.instance.currentClass = classes[index];
+              Globals.instance.subjects =
+                  await FireRepo.instance.getSubjectsOfClass(classes[index]);
               Globals.navigateScreen(SubjectsPage(
                 rclass: classes[index],
               ));
