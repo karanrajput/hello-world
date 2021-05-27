@@ -1,16 +1,10 @@
 import 'package:bkdschool/RWidgets/RWidgets.dart';
-import 'package:bkdschool/bloc/user_bloc/user_bloc.dart';
-import 'package:bkdschool/data/models/ClassModel.dart';
 import 'package:bkdschool/data/models/UserModel.dart';
-import 'package:bkdschool/data/repos/ChatRepo.dart';
 import 'package:bkdschool/data/repos/FireRepo.dart';
-import 'package:bkdschool/data/repos/NotifRepo.dart';
 import 'package:bkdschool/data/services/services.dart';
-import 'package:bkdschool/screens/EntryScreen/EntryScreen.dart';
 import 'package:bkdschool/screens/HomeScreen/pages/Page_Classes.dart';
 import 'package:bkdschool/screens/HomeScreen/pages/Page_Subjects.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

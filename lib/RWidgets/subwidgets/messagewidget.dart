@@ -2,7 +2,6 @@ import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/data/models/MessageModel.dart';
 import 'package:bkdschool/data/models/UserModel.dart';
 import 'package:bkdschool/data/repos/FireRepo.dart';
-import 'package:bkdschool/data/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
@@ -86,6 +85,7 @@ class RMessageItemWidget extends StatelessWidget {
     );
   }
 
+  // ignore: missing_return
   Widget makeMes() {
     if (message.type == RMessageType.TEXT) {
       return makeText(

@@ -11,7 +11,6 @@ import 'package:http/http.dart' as http;
 import 'package:bkdschool/data/models/MessageModel.dart';
 import 'package:bkdschool/data/models/SubjectModel.dart';
 import 'package:bkdschool/data/repos/FireRepo.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
 
 class ChatRepo {

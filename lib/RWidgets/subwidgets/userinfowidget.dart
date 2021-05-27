@@ -2,7 +2,6 @@ import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/RWidgets/buttons.dart';
 import 'package:bkdschool/data/models/UserModel.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RUserInfoItemWidget extends StatelessWidget {
   final RUser ruser;

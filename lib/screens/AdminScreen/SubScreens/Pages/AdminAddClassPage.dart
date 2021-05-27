@@ -8,8 +8,6 @@ class AdminAddClassPage extends StatelessWidget {
   final nameController = TextEditingController();
 
   _addClassClick(BuildContext context) async {
-    //TODO: Add Validation of fields
-
     var rclass = RClass(
       code: codeController.text,
       name: nameController.text,
@@ -27,12 +25,12 @@ class AdminAddClassPage extends StatelessWidget {
         child: makeScroll(
           child: Column(
             children: [
-              RTextField(
+              rTextField(
                   label: "Code",
                   controller: codeController,
                   keyboardtype: TextInputType.number),
               makeSpace(10),
-              RTextField(label: "Name", controller: nameController),
+              rTextField(label: "Name", controller: nameController),
               makeSpace(50),
               RButton(
                 expand: true,

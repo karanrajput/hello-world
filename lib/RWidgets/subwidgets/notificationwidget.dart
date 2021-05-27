@@ -1,5 +1,7 @@
 import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/data/models/NotificationModel.dart';
+import 'package:bkdschool/data/models/UserModel.dart';
+import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/services/globals.dart';
 import 'package:bkdschool/screens/AdminScreen/SubScreens/Pages/AdminAddEvent.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +21,14 @@ class RNotificationitemwidget extends StatelessWidget {
             color: Colors.white,
             clickable: true,
             onPressed: () {
-              Globals.makeRPopup(
-                  AdminAddEvent(
-                    editevent: true,
-                    notification: notification,
-                  ),
-                  "");
+              if (FireRepo.instance.currentUser.type == RUserType.ADMIN) {
+                Globals.makeRPopup(
+                    AdminAddEvent(
+                      editevent: true,
+                      notification: notification,
+                    ),
+                    "");
+              }
             },
             child: Column(
               children: [
@@ -39,32 +43,26 @@ class RNotificationitemwidget extends StatelessWidget {
                         bottomRight: Radius.circular(0)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(2.0),
                     child: makeText(
                         "Notification For " +
-                            (notification.forstudent & notification.forteacher
-                                ? "Both"
-                                : notification.forteacher
-                                    ? "Teacher"
-                                    : notification.forstudent
-                                        ? "Student"
-                                        : "None"),
-                        fontSize: 20),
+                            notification.notificationFor.value,
+                        fontSize: 15),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 10, right: 4, top: 8, bottom: 8),
+                      left: 10, right: 4, top: 4, bottom: 4),
                   child: Container(
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         makeText(notification.heading,
-                            fontSize: 25, alignment: TextAlign.left),
+                            fontSize: 20, alignment: TextAlign.left),
                         makeText(
                           notification.description,
-                          fontSize: 20,
+                          fontSize: 17,
                           alignment: TextAlign.left,
                           weight: FontWeight.w500,
                         ),
@@ -83,12 +81,15 @@ class RNotificationitemwidget extends StatelessWidget {
                         bottomRight: Radius.circular(20)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: makeText("End Date " +
-                        DateFormat("dd MMM yyyy")
-                            .format(notification.lastdate)),
+                    padding: const EdgeInsets.all(2.0),
+                    child: makeText(
+                      "End Date " +
+                          DateFormat("dd MMM yyyy")
+                              .format(notification.lastdate),
+                      fontSize: 13,
+                    ),
                   ),
-                ),
+                )
               ],
             )),
       ),

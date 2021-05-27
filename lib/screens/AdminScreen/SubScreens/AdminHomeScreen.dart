@@ -6,7 +6,6 @@ import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/services/globals.dart';
 import 'package:bkdschool/screens/AdminScreen/SubScreens/Exam/Adminexampage.dart';
 import 'package:bkdschool/screens/EntryScreen/EntryScreen.dart';
-import 'package:bkdschool/zkaran/Screens/Testscreens.dart/Testpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,12 +32,6 @@ class AdminHomeScreen extends StatelessWidget {
                 text: "Admin Exam",
                 onPressed: () {
                   Globals.navigateScreen(AdminExamPage());
-                },
-              ),
-              RButton(
-                text: "Test Page",
-                onPressed: () {
-                  Globals.navigateScreen(Testpage());
                 },
               ),
             ],

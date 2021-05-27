@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 //R
 
-Widget RTextField(
+Widget rTextField(
     {TextEditingController controller,
     TextInputType keyboardtype = TextInputType.text,
     String hint = "",

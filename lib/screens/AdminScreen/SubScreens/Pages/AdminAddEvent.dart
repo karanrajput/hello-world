@@ -18,15 +18,18 @@ class _AdminAddEventState extends State<AdminAddEvent> {
 
   final descriptionController = TextEditingController();
 
-  bool _checked = false;
-
   _addNotificationClick(BuildContext context) async {
     var notif = RNotification(
       heading: headingController.text,
       description: descriptionController.text,
       lastdate: pickedDate,
-      forstudent: _studentvalue,
-      forteacher: _teachervalue,
+      notificationFor: (_studentvalue & _teachervalue
+          ? RNotificationFor.BOTH
+          : _teachervalue
+              ? RNotificationFor.TEACHER
+              : _studentvalue
+                  ? RNotificationFor.STUDENT
+                  : RNotificationFor.NONE),
     );
     if (widget.editevent) {
       FireRepo.instance
@@ -44,15 +47,18 @@ class _AdminAddEventState extends State<AdminAddEvent> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     pickedDate = DateTime.now();
     if (widget.editevent) {
       headingController.text = widget.notification.heading;
       descriptionController.text = widget.notification.description;
       pickedDate = widget.notification.lastdate;
-      _studentvalue = widget.notification.forstudent;
-      _teachervalue = widget.notification.forteacher;
+      _studentvalue =
+          widget.notification.notificationFor == RNotificationFor.STUDENT ||
+              widget.notification.notificationFor == RNotificationFor.BOTH;
+      _teachervalue =
+          widget.notification.notificationFor == RNotificationFor.TEACHER ||
+              widget.notification.notificationFor == RNotificationFor.BOTH;
     }
   }
 
@@ -71,12 +77,12 @@ class _AdminAddEventState extends State<AdminAddEvent> {
                 weight: FontWeight.bold,
               ),
               makeSpace(10),
-              RTextField(
+              rTextField(
                   label: "Heading",
                   controller: headingController,
                   keyboardtype: TextInputType.text),
               makeSpace(10),
-              RTextField(
+              rTextField(
                   label: "Description", controller: descriptionController),
               makeSpace(20),
               ListTile(

@@ -20,7 +20,6 @@ import 'data/models/UserModel.dart';
 import 'data/repos/FireRepo.dart';
 import 'data/repos/NotifRepo.dart';
 import 'data/services/services.dart';
-import 'zkaran/zmain.dart';
 
 Future<void> fcmBGHandler(RemoteMessage message) async {
   print("FCM BG RECIEVED");

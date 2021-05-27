@@ -35,7 +35,7 @@ class _AdminAddSubjectPageState extends State<AdminAddSubjectPage> {
           child: makeScroll(
             child: Column(
               children: [
-                RTextField(
+                rTextField(
                   label: "Subject Name",
                   controller: nameController,
                 ),

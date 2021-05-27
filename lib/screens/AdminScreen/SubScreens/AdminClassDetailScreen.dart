@@ -5,9 +5,7 @@ import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/services/globals.dart';
 import 'package:bkdschool/screens/AdminScreen/SubScreens/AdminStudentsScreen.dart';
 import 'package:bkdschool/screens/ChatScreen/ChatScreen.dart';
-import 'package:bkdschool/zkaran/chatscreen.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'Pages/AdminAddSubject.dart';
 
 class AdminClassDetailScreen extends StatelessWidget {

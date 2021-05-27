@@ -1,13 +1,9 @@
 import 'package:bkdschool/RWidgets/RWidgets.dart';
-import 'package:bkdschool/bloc/user_bloc/user_bloc.dart';
 import 'package:bkdschool/data/models/ClassModel.dart';
 import 'package:bkdschool/data/models/UserModel.dart';
 import 'package:bkdschool/data/repos/FireRepo.dart';
-import 'package:bkdschool/data/repos/UserRepo.dart';
 import 'package:bkdschool/data/services/globals.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminAddStudentPage extends StatefulWidget {
   final RUser ruser;
@@ -34,8 +30,6 @@ class _AdminAddStudentPageState extends State<AdminAddStudentPage> {
   bool isReadOnly = false;
 
   _addStudentClicked(BuildContext context) async {
-    //TODO: Add Validation of fields
-
     setState(() {
       isLoading = true;
     });
@@ -113,36 +107,36 @@ class _AdminAddStudentPageState extends State<AdminAddStudentPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RTextField(
+              rTextField(
                 label: "Username",
                 controller: usernameController,
               ),
               makeSpace(5),
-              RTextField(
+              rTextField(
                 label: "Password",
                 controller: passwordController,
                 keyboardtype: TextInputType.visiblePassword,
               ),
               makeSpace(30),
-              RTextField(
+              rTextField(
                 label: "Name",
                 controller: nameController,
                 keyboardtype: TextInputType.name,
               ),
               makeSpace(5),
-              RTextField(
+              rTextField(
                 label: "Roll Number",
                 controller: rollnoController,
                 keyboardtype: TextInputType.number,
               ),
               makeSpace(5),
-              RTextField(
+              rTextField(
                 label: "Phone",
                 controller: phoneController,
                 keyboardtype: TextInputType.phone,
               ),
               makeSpace(5),
-              RTextField(
+              rTextField(
                 label: "Email",
                 controller: emailController,
                 keyboardtype: TextInputType.emailAddress,
@@ -157,13 +151,13 @@ class _AdminAddStudentPageState extends State<AdminAddStudentPage> {
               //   ),
               // ),
               makeSpace(5),
-              RTextField(
+              rTextField(
                 label: "Father Name",
                 controller: fathernameController,
                 keyboardtype: TextInputType.name,
               ),
               makeSpace(5),
-              RTextField(
+              rTextField(
                 label: "Mother Name",
                 controller: mothernameController,
                 keyboardtype: TextInputType.name,

@@ -1,7 +1,6 @@
 import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/data/models/UserModel.dart';
 import 'package:bkdschool/data/repos/FireRepo.dart';
-import 'package:bkdschool/data/repos/UserRepo.dart';
 import 'package:bkdschool/data/services/globals.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +25,6 @@ class _AdminAddTeacherPageState extends State<AdminAddTeacherPage> {
   bool isReadOnly = false;
 
   _addTeacherClicked(BuildContext context) async {
-    //TODO: Add Validation of fields
     //validation
     if (usernameController.text.length < 4) {
       Globals.showSnackbar(context, "Username less then 4 Characters");
@@ -101,36 +99,36 @@ class _AdminAddTeacherPageState extends State<AdminAddTeacherPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RTextField(
+              rTextField(
                 label: "Username",
                 controller: usernameController,
               ),
               makeSpace(5),
-              RTextField(
+              rTextField(
                 label: "Password",
                 controller: passwordController,
                 keyboardtype: TextInputType.visiblePassword,
               ),
               makeSpace(30),
-              RTextField(
+              rTextField(
                 label: "Name",
                 controller: nameController,
                 keyboardtype: TextInputType.name,
               ),
               makeSpace(5),
-              RTextField(
+              rTextField(
                 label: "ID Number",
                 controller: rollnoController,
                 keyboardtype: TextInputType.number,
               ),
               makeSpace(5),
-              RTextField(
+              rTextField(
                 label: "Phone",
                 controller: phoneController,
                 keyboardtype: TextInputType.phone,
               ),
               makeSpace(5),
-              RTextField(
+              rTextField(
                 label: "Email",
                 controller: emailController,
                 keyboardtype: TextInputType.emailAddress,

@@ -1,8 +1,6 @@
 import 'package:bkdschool/RWidgets/RWidgets.dart';
-import 'package:bkdschool/data/models/NotificationModel.dart';
 import 'package:bkdschool/data/models/questionmodal.dart';
 import 'package:bkdschool/data/repos/FireRepo.dart';
-import 'package:bkdschool/zkaran/Screens/Testscreens.dart/Testmaterial.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -96,7 +94,7 @@ class _AdminAddQuestionState extends State<AdminAddQuestion> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        RTextField(
+                        rTextField(
                             label: "Question",
                             controller: questionController,
                             keyboardtype: TextInputType.multiline),
@@ -105,7 +103,7 @@ class _AdminAddQuestionState extends State<AdminAddQuestion> {
                           child: Row(
                             children: [
                               Expanded(
-                                child: RTextField(
+                                child: rTextField(
                                     label: "Option 1",
                                     controller: op1Controller,
                                     keyboardtype: TextInputType.multiline),
@@ -127,7 +125,7 @@ class _AdminAddQuestionState extends State<AdminAddQuestion> {
                           child: Row(
                             children: [
                               Expanded(
-                                child: RTextField(
+                                child: rTextField(
                                     label: "Option 2",
                                     controller: op2Controller,
                                     keyboardtype: TextInputType.multiline),
@@ -149,7 +147,7 @@ class _AdminAddQuestionState extends State<AdminAddQuestion> {
                           child: Row(
                             children: [
                               Expanded(
-                                child: RTextField(
+                                child: rTextField(
                                     label: "Option 3",
                                     controller: op3Controller,
                                     keyboardtype: TextInputType.multiline),
@@ -171,7 +169,7 @@ class _AdminAddQuestionState extends State<AdminAddQuestion> {
                           child: Row(
                             children: [
                               Expanded(
-                                child: RTextField(
+                                child: rTextField(
                                     label: "Option 4",
                                     controller: op4Controller,
                                     keyboardtype: TextInputType.multiline),

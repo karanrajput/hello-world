@@ -1,7 +1,5 @@
 //
 // Textfield Item
-//
-import 'dart:html';
 
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +7,7 @@ import 'package:flutter/services.dart';
 
 //R
 
-Widget Emailfield(
+Widget emailfield(
     {TextEditingController controller,
     TextInputType keyboardtype = TextInputType.text,
     String hint = "",

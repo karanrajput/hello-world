@@ -14,10 +14,8 @@ import 'package:bkdschool/screens/AdminScreen/SubScreens/Exam/Adminexampage.dart
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:jitsi_meet/feature_flag/feature_flag.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:open_file/open_file.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 

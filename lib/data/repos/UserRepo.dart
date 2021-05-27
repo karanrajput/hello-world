@@ -2,8 +2,6 @@ import 'package:bkdschool/data/models/UserModel.dart';
 import 'package:bkdschool/data/repos/ChatRepo.dart';
 import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class UserRepo {
   final FirebaseAuth _auth;

@@ -18,11 +18,11 @@ class AccountSetupPage extends StatelessWidget {
       makeText("Account Setup"),
       makeSpace(20),
       makeText("Form"),
-      RTextField(
+      rTextField(
         controller: nameController,
         keyboardtype: TextInputType.name,
       ),
-      RTextField(
+      rTextField(
         controller: typeController,
         keyboardtype: TextInputType.text,
       ),

@@ -6,7 +6,6 @@ import 'package:bkdschool/data/models/UserModel.dart';
 import 'package:bkdschool/data/repos/ChatRepo.dart';
 import 'package:bkdschool/data/models/questionmodal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
 
 class FireRepo {
@@ -121,10 +120,20 @@ class FireRepo {
     notificationCollection.doc(notification.docid).delete();
   }
 
-  Stream<List<RNotification>> getNotificationStream() async* {
-    yield* notificationCollection.snapshots().map((event) => event.docs
-        .map((e) => RNotification.fromMap(e.data())..docid = e.id)
-        .toList());
+  Stream<List<RNotification>> getNotificationStream(
+      {RNotificationFor who}) async* {
+    if (who == null) {
+      yield* notificationCollection.snapshots().map((event) => event.docs
+          .map((e) => RNotification.fromMap(e.data())..docid = e.id)
+          .toList());
+    } else {
+      yield* notificationCollection
+          .where("notificationFor", isEqualTo: who.value)
+          .snapshots()
+          .map((event) => event.docs
+              .map((e) => RNotification.fromMap(e.data())..docid = e.id)
+              .toList());
+    }
   }
 
 //notification

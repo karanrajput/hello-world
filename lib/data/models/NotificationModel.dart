@@ -1,27 +1,32 @@
-import 'dart:convert';
+enum RNotificationFor { from, STUDENT, TEACHER, BOTH, NONE }
+
+extension RNotificationForExtension on RNotificationFor {
+  static const values = ["", "student", "teacher", "both", "none"];
+  String get value => values[this.index];
+  operator [](String key) => RNotificationFor.values.firstWhere(
+      (e) => e.toString() == 'RNotificationFor.' + key.toUpperCase());
+}
 
 class RNotification {
   String docid;
   final String heading;
   final String description;
   final DateTime lastdate;
-  final bool forstudent;
-  final bool forteacher;
+  final RNotificationFor notificationFor;
 
-  RNotification(
-      {this.heading,
-      this.description,
-      this.lastdate,
-      this.forstudent,
-      this.forteacher});
+  RNotification({
+    this.notificationFor,
+    this.heading,
+    this.description,
+    this.lastdate,
+  });
 
   Map<String, dynamic> toMap() {
     return {
       'heading': heading,
       'description': description,
       'lastdate': lastdate.millisecondsSinceEpoch,
-      'forstudent': forstudent,
-      'forteacher': forteacher,
+      "notificationFor": notificationFor.value,
     };
   }
 
@@ -30,8 +35,7 @@ class RNotification {
       heading: map['heading'],
       description: map['description'],
       lastdate: DateTime.fromMillisecondsSinceEpoch(map['lastdate']),
-      forstudent: map['forstudent'],
-      forteacher: map['forteacher'],
+      notificationFor: RNotificationFor.from[map['notificationFor'] ?? "both"],
     );
   }
 }

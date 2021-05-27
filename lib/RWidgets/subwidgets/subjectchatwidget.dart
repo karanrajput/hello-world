@@ -1,5 +1,4 @@
 import 'package:bkdschool/data/models/SubjectModel.dart';
-import 'package:bkdschool/data/services/globals.dart';
 import 'package:flutter/material.dart';
 
 import '../RWidgets.dart';

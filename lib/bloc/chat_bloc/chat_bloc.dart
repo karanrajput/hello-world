@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bkdschool/data/models/MessageModel.dart';
 import 'package:bkdschool/data/models/SubjectModel.dart';
-import 'package:bkdschool/data/repos/FireRepo.dart';
 import 'package:bkdschool/data/repos/ChatRepo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';

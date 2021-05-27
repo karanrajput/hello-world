@@ -76,7 +76,7 @@ class _AdminStudentsScreenState extends State<AdminStudentsScreen> {
               child: Row(
                 children: [
                   Expanded(
-                    child: RTextField(
+                    child: rTextField(
                       controller: searchController,
                       icon: Icon(Icons.search),
                       label: null,

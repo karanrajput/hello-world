@@ -2,7 +2,6 @@ import 'package:bkdschool/RWidgets/RWidgets.dart';
 import 'package:bkdschool/bloc/user_bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatelessWidget {
   final _usernameController = TextEditingController();
@@ -26,7 +25,7 @@ class LoginPage extends StatelessWidget {
           makeCardContainer(
             child: Column(
               children: [
-                RTextField(
+                rTextField(
                   controller: _usernameController,
                   hint: "enter your username",
                   label: "Username",
@@ -34,7 +33,7 @@ class LoginPage extends StatelessWidget {
                   onSubmit: (_) => focus.requestFocus(focus),
                 ),
                 makeSpace(20),
-                RTextField(
+                rTextField(
                   controller: _passController,
                   focusNode: focus,
                   obscureText: true,

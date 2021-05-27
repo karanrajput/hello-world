@@ -5,8 +5,6 @@ import 'package:bkdschool/screens/AdminScreen/SubScreens/AdminHomeScreen.dart';
 import 'SubScreens/AdminClassScreen.dart';
 import 'SubScreens/Pages/AdminAddClassPage.dart';
 import 'SubScreens/Pages/AdminAddEvent.dart';
-import 'SubScreens/Pages/AdminAddStudentPage.dart';
-import 'SubScreens/AdminStudentsScreen.dart';
 import 'SubScreens/Pages/AdminAddTeacherPage.dart';
 import 'SubScreens/AdminTeachersScreen.dart';
 

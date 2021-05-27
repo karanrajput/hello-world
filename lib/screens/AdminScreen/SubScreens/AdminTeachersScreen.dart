@@ -60,7 +60,7 @@ class _AdminTeacherScreenState extends State<AdminTeacherScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8),
-              child: RTextField(
+              child: rTextField(
                 controller: searchController,
                 icon: Icon(Icons.search),
                 label: null,
