@@ -17,7 +17,6 @@ class AdminHomeScreen extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          makeText("HomePage"),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -37,6 +36,12 @@ class AdminHomeScreen extends StatelessWidget {
               ),
               RButton(
                 text: "video player",
+                onPressed: () {
+                  Globals.navigateScreen(ChewieDemo());
+                },
+              ),
+              RButton(
+                text: "video Download",
                 onPressed: () {
                   Globals.navigateScreen(ChewieDemo());
                 },

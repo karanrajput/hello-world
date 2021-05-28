@@ -97,24 +97,18 @@ class _ChewieDemoState extends State<ChewieDemo> {
                 ),
               ),
               TextButton(
-                onPressed: () {
-                  _chewieController?.enterFullScreen();
-                },
-                child: const Text('Fullscreen'),
-              ),
-              TextButton(
-                // onPressed: _saveNetworkVideo,
+                onPressed: _saveNetworkVideo,
                 child: const Text('Save'),
               ),
             ])));
   }
 
-  // void _saveNetworkVideo() async {
-  //   String path = 'http://scaptor.com/bkdschool/video.mp4';
-  //   GallerySaver.saveVideo(path, albumName: albumName).then((bool success) {
-  //     setState(() {
-  //       print('Video is saved');
-  //     });
-  //   });
-  // }
+  void _saveNetworkVideo() async {
+    String path = 'http://scaptor.com/bkdschool/video.mp4';
+    GallerySaver.saveVideo(path, albumName: albumName).then((bool success) {
+      setState(() {
+        print('Video is saved');
+      });
+    });
+  }
 }

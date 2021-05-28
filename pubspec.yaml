@@ -64,7 +64,9 @@ dependencies:
   bubble_bottom_bar: ^1.2.0
   url_launcher: ^6.0.3
   gallery_saver: ^2.1.0
-  
+  chewie: ^1.2.0
+  image_gallery_saver: ^1.6.9
+  permission_handler: ^8.0.0+2
 
 
 dev_dependencies:
